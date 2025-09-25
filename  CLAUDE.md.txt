@@ -1,0 +1,47 @@
+# CLAUDE.md
+
+## プロジェクト概要
+
+**FX Practice Simulator** - React Nativeで開発するFX取引練習用モバイルアプリケーション
+
+### 目的
+FX初心者が実際の資金をリスクにさらすことなく、過去の実際の為替データを使用してトレードの練習ができるiOS/Androidアプリを開発する。
+
+### 主な機能
+- 過去3年分の為替データを使用したトレードシミュレーション
+- 6通貨ペア対応（USD/JPY、EUR/USD、EUR/JPY、GBP/USD、GBP/JPY、AUD/JPY）
+- ローソク足チャート表示
+- テクニカル指標（移動平均線、RSI、MACD、ボリンジャーバンド）
+- 仮想資金での取引（成行・指値注文）
+- 取引履歴・成績分析
+- 目標設定・ランキング機能
+
+## 技術スタック
+
+- React Native: 0.72+
+- TypeScript: 5.0+
+- Redux Toolkit
+- React Navigation 6
+- SQLite (react-native-sqlite-storage)
+- react-native-charts-wrapper
+
+## 開発フェーズ
+
+### Phase 1: 基盤構築（オフライン版）
+- SQLiteデータベース設計
+- CSVデータインポート機能
+- 基本的なチャート表示
+- 取引シミュレーション
+
+### Phase 2: リアルタイムデータ（5分遅延）
+- Yahoo Finance API統合
+- ハイブリッドデータ管理
+
+### Phase 3: 完全版リリース
+- 全機能実装
+- パフォーマンス最適化
+
+## 仮想口座について
+- 練習用の架空の口座（実際のお金は使用しない）
+- 初期資金は自由に設定可能（1万円〜1億円）
+- いつでもリセット可能
