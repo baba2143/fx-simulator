@@ -78,4 +78,56 @@ declare module 'react-native-charts-wrapper' {
   }
 
   export class CandleStickChart extends Component<CandleStickChartProps> {}
+
+  export interface LineChartProps extends ViewProps, ChartConfig {
+    data: {
+      dataSets: Array<{
+        values: Array<{ x: number; y: number }>;
+        label: string;
+        config: {
+          color?: string;
+          lineWidth?: number;
+          drawCircles?: boolean;
+          drawValues?: boolean;
+          mode?: string;
+          fillColor?: string;
+          fillAlpha?: number;
+          drawFilled?: boolean;
+          enableDashedLine?: boolean;
+          dashedLine?: {
+            lineLength: number;
+            spaceLength: number;
+          };
+        };
+      }>;
+    };
+  }
+
+  export class LineChart extends Component<LineChartProps> {}
+
+  export interface PieChartProps extends ViewProps {
+    data: {
+      dataSets: Array<{
+        values: Array<{ value: number; label: string }>;
+        label: string;
+        config: {
+          colors?: string[];
+          valueTextSize?: number;
+          valueTextColor?: string;
+          sliceSpace?: number;
+        };
+      }>;
+    };
+    backgroundColor?: string;
+    legend?: {
+      enabled?: boolean;
+      textColor?: string;
+      position?: string;
+    };
+    description?: {
+      text?: string;
+    };
+  }
+
+  export class PieChart extends Component<PieChartProps> {}
 }

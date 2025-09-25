@@ -3,6 +3,8 @@ import priceReducer from './slices/priceSlice';
 import tradeReducer from './slices/tradeSlice';
 import accountReducer from './slices/accountSlice';
 import chartReducer from './slices/chartSlice';
+import indicatorReducer from './slices/indicatorSlice';
+import drawingReducer from './slices/drawingSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ export const store = configureStore({
     trade: tradeReducer,
     account: accountReducer,
     chart: chartReducer,
+    indicators: indicatorReducer,
+    drawing: drawingReducer,
   },
 });
 
