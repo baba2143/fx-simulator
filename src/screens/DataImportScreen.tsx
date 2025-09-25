@@ -21,7 +21,22 @@ export const DataImportScreen: React.FC = () => {
   const [overallProgress, setOverallProgress] = useState(0);
 
   useEffect(() => {
-    checkAndImportData();
+    const initImport = async () => {
+      try {
+        const isDataImported = await AsyncStorage.getItem('isDataImported');
+        if (isDataImported === 'true') {
+          navigation.replace('MainTab');
+          return;
+        }
+
+        await importData();
+      } catch (error) {
+        console.error('Data import error:', error);
+        Alert.alert('Error', 'Failed to import currency data. Please try again.');
+      }
+    };
+
+    initImport();
   }, [navigation]);
 
   const checkAndImportData = async () => {
