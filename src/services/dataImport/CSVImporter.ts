@@ -30,8 +30,9 @@ export class CSVImporter {
       const csvContent = await RNFS.readFileAssets(`data/${currencyPair}_daily.csv`, 'utf8');
       const lines = csvContent.split('\n').filter(line => line.trim());
 
-      // ヘッダーをスキップ
-      const dataLines = lines.slice(1);
+      // ヘッダーをチェック
+      const hasHeader = lines[0] && lines[0].toLowerCase().includes('date');
+      const dataLines = hasHeader ? lines.slice(1) : lines;
       const totalLines = dataLines.length;
 
       // トランザクション開始
@@ -70,14 +71,30 @@ export class CSVImporter {
     const placeholders: string[] = [];
 
     for (const line of lines) {
-      const [dateStr, open, high, low, close] = line.split(',');
+      const parts = line.split(',');
+      if (parts.length < 5) continue;
+
+      const [dateStr, open, high, low, close] = parts;
 
       if (!dateStr || !open || !high || !low || !close) continue;
 
-      // YYYYMMDDをタイムスタンプに変換
-      const year = parseInt(dateStr.substring(0, 4), 10);
-      const month = parseInt(dateStr.substring(4, 6), 10) - 1;
-      const day = parseInt(dateStr.substring(6, 8), 10);
+      // 日付形式を判定（YYYYMMDD or YYYY-MM-DD）
+      let year, month, day;
+      if (dateStr.includes('-')) {
+        // YYYY-MM-DD形式
+        const dateParts = dateStr.split('-');
+        year = parseInt(dateParts[0], 10);
+        month = parseInt(dateParts[1], 10) - 1;
+        day = parseInt(dateParts[2], 10);
+      } else if (dateStr.length === 8) {
+        // YYYYMMDD形式
+        year = parseInt(dateStr.substring(0, 4), 10);
+        month = parseInt(dateStr.substring(4, 6), 10) - 1;
+        day = parseInt(dateStr.substring(6, 8), 10);
+      } else {
+        continue; // 不明な形式はスキップ
+      }
+
       const date = new Date(year, month, day).getTime();
 
       values.push(
