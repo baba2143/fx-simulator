@@ -63,5 +63,6 @@ export type MainTabParamList = {
   Trade: undefined;
   History: undefined;
   Performance: undefined;
+  Goals: undefined;
   Settings: undefined;
 };

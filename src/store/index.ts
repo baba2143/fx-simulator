@@ -5,6 +5,8 @@ import accountReducer from './slices/accountSlice';
 import chartReducer from './slices/chartSlice';
 import indicatorReducer from './slices/indicatorSlice';
 import drawingReducer from './slices/drawingSlice';
+import goalReducer from './slices/goalSlice';
+import rankingReducer from './slices/rankingSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +16,8 @@ export const store = configureStore({
     chart: chartReducer,
     indicators: indicatorReducer,
     drawing: drawingReducer,
+    goals: goalReducer,
+    ranking: rankingReducer,
   },
 });
 

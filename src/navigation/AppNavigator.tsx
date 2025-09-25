@@ -10,6 +10,7 @@ import { ChartScreen } from '../screens/ChartScreen';
 import { TradeScreen } from '../screens/TradeScreen';
 import { HistoryScreen } from '../screens/HistoryScreen';
 import { PerformanceScreen } from '../screens/PerformanceScreen';
+import { GoalsScreen } from '../screens/GoalsScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 
 import { RootStackParamList, MainTabParamList } from '../types';
@@ -37,6 +38,9 @@ const MainTabNavigator = () => {
             case 'Performance':
               iconName = focused ? 'analytics' : 'analytics-outline';
               break;
+            case 'Goals':
+              iconName = focused ? 'flag' : 'flag-outline';
+              break;
             case 'Settings':
               iconName = focused ? 'settings' : 'settings-outline';
               break;
@@ -62,6 +66,7 @@ const MainTabNavigator = () => {
         component={PerformanceScreen}
         options={{ title: '成績' }}
       />
+      <MainTab.Screen name="Goals" component={GoalsScreen} options={{ title: '目標' }} />
       <MainTab.Screen name="Settings" component={SettingsScreen} options={{ title: '設定' }} />
     </MainTab.Navigator>
   );
