@@ -10,6 +10,7 @@ import {
   setRSIData,
 } from '../store/slices/indicatorSlice';
 import { CurrencyPair } from '../types';
+import { getAllCurrencyPairs, getCurrencyPairDisplayName } from '../utils/currencyPairs';
 import { CandlestickChart } from '../components/charts/CandlestickChart';
 import { TimeframeSelector } from '../components/charts/TimeframeSelector';
 import { IndicatorOverlay } from '../components/charts/IndicatorOverlay';
@@ -19,7 +20,7 @@ import { DrawingToolbar } from '../components/charts/DrawingToolbar';
 import { calculateSMA, calculateEMA, calculateRSI } from '../utils/technicalIndicators';
 import { generateTradingSignals, analyzeMarketCondition } from '../utils/marketAnalysis';
 
-const CURRENCY_PAIRS: CurrencyPair[] = ['USDJPY', 'EURUSD', 'EURJPY', 'GBPUSD', 'GBPJPY', 'AUDJPY'];
+const CURRENCY_PAIRS: CurrencyPair[] = getAllCurrencyPairs();
 
 export const ChartScreen: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

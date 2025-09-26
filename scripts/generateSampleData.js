@@ -18,6 +18,8 @@ const CONFIG = {
     { symbol: 'GBPUSD', basePrice: 1.38, volatility: 0.004 },
     { symbol: 'GBPJPY', basePrice: 152.0, volatility: 0.7 },
     { symbol: 'AUDJPY', basePrice: 82.0, volatility: 0.4 },
+    { symbol: 'XAUJPY', basePrice: 195000.0, volatility: 2000.0 }, // ゴールド/円 (1オンス)
+    { symbol: 'XAUUSD', basePrice: 1850.0, volatility: 15.0 },     // ゴールド/ドル (1オンス)
   ],
 
   // 生成するデータの期間

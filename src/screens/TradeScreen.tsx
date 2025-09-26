@@ -12,8 +12,9 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { createTrade, fetchOpenTrades } from '../store/slices/tradeSlice';
 import { fetchAccount } from '../store/slices/accountSlice';
 import { CurrencyPair, TradeType } from '../types';
+import { getAllCurrencyPairs, getCurrencyPairDisplayName, formatPrice, isPreciousMetal } from '../utils/currencyPairs';
 
-const CURRENCY_PAIRS: CurrencyPair[] = ['USDJPY', 'EURUSD', 'EURJPY', 'GBPUSD', 'GBPJPY', 'AUDJPY'];
+const CURRENCY_PAIRS: CurrencyPair[] = getAllCurrencyPairs();
 
 export const TradeScreen: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -79,7 +80,7 @@ export const TradeScreen: React.FC = () => {
             onPress={() => setSelectedPair(pair)}>
             <Text
               style={[styles.pairButtonText, pair === selectedPair && styles.activePairButtonText]}>
-              {pair}
+              {getCurrencyPairDisplayName(pair, true)}
             </Text>
           </TouchableOpacity>
         ))}

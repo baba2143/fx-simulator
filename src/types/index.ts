@@ -11,7 +11,7 @@ export interface PriceData {
 }
 
 // 通貨ペア
-export type CurrencyPair = 'USDJPY' | 'EURUSD' | 'EURJPY' | 'GBPUSD' | 'GBPJPY' | 'AUDJPY';
+export type CurrencyPair = 'USDJPY' | 'EURUSD' | 'EURJPY' | 'GBPUSD' | 'GBPJPY' | 'AUDJPY' | 'XAUJPY' | 'XAUUSD';
 
 // 取引タイプ
 export type TradeType = 'buy' | 'sell';

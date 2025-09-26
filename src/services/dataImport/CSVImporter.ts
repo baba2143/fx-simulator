@@ -120,7 +120,7 @@ export class CSVImporter {
   static async importAllCurrencyPairs(
     onProgress?: (pair: CurrencyPair, progress: number) => void,
   ): Promise<void> {
-    const pairs: CurrencyPair[] = ['USDJPY', 'EURUSD', 'EURJPY', 'GBPUSD', 'GBPJPY', 'AUDJPY'];
+    const pairs: CurrencyPair[] = ['USDJPY', 'EURUSD', 'EURJPY', 'GBPUSD', 'GBPJPY', 'AUDJPY', 'XAUJPY', 'XAUUSD'];
 
     for (const pair of pairs) {
       await this.importHistoricalData(pair, progress => {
