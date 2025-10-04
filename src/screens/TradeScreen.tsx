@@ -12,7 +12,12 @@ import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { createTrade, fetchOpenTrades } from '../store/slices/tradeSlice';
 import { fetchAccount } from '../store/slices/accountSlice';
 import { CurrencyPair, TradeType } from '../types';
-import { getAllCurrencyPairs, getCurrencyPairDisplayName, formatPrice, isPreciousMetal } from '../utils/currencyPairs';
+import {
+  getAllCurrencyPairs,
+  getCurrencyPairDisplayName,
+  formatPrice,
+  isPreciousMetal,
+} from '../utils/currencyPairs';
 
 const CURRENCY_PAIRS: CurrencyPair[] = getAllCurrencyPairs();
 

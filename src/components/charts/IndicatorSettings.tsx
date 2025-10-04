@@ -119,18 +119,13 @@ export const IndicatorSettings: React.FC<IndicatorSettingsProps> = ({ visible, o
             {(Object.keys(INDICATOR_PRESETS) as IndicatorType[]).map(type => (
               <TouchableOpacity
                 key={type}
-                style={[
-                  styles.typeButton,
-                  newIndicatorType === type && styles.selectedTypeButton,
-                ]}
-                onPress={() => setNewIndicatorType(type as IndicatorType)}
-              >
+                style={[styles.typeButton, newIndicatorType === type && styles.selectedTypeButton]}
+                onPress={() => setNewIndicatorType(type as IndicatorType)}>
                 <Text
                   style={[
                     styles.typeButtonText,
                     newIndicatorType === type && styles.selectedTypeButtonText,
-                  ]}
-                >
+                  ]}>
                   {type.toUpperCase()}
                 </Text>
               </TouchableOpacity>
@@ -207,8 +202,7 @@ export const IndicatorSettings: React.FC<IndicatorSettingsProps> = ({ visible, o
 
                 <TouchableOpacity
                   style={styles.removeButton}
-                  onPress={() => handleRemoveIndicator(indicator.id)}
-                >
+                  onPress={() => handleRemoveIndicator(indicator.id)}>
                   <Text style={styles.removeButtonText}>削除</Text>
                 </TouchableOpacity>
               </View>

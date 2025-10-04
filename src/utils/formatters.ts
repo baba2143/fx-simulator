@@ -2,7 +2,9 @@
  * 通貨フォーマッター
  */
 export const formatCurrency = (amount: number, currency: string = 'JPY'): string => {
-  if (isNaN(amount)) return '¥0';
+  if (isNaN(amount)) {
+    return '¥0';
+  }
 
   const formatter = new Intl.NumberFormat('ja-JP', {
     style: 'currency',
@@ -18,7 +20,9 @@ export const formatCurrency = (amount: number, currency: string = 'JPY'): string
  * パーセント フォーマッター
  */
 export const formatPercentage = (value: number, decimals: number = 1): string => {
-  if (isNaN(value)) return '0.0%';
+  if (isNaN(value)) {
+    return '0.0%';
+  }
 
   return `${value.toFixed(decimals)}%`;
 };
@@ -27,7 +31,9 @@ export const formatPercentage = (value: number, decimals: number = 1): string =>
  * 数値フォーマッター（カンマ区切り）
  */
 export const formatNumber = (value: number, decimals: number = 0): string => {
-  if (isNaN(value)) return '0';
+  if (isNaN(value)) {
+    return '0';
+  }
 
   return new Intl.NumberFormat('ja-JP', {
     minimumFractionDigits: decimals,
@@ -39,7 +45,9 @@ export const formatNumber = (value: number, decimals: number = 0): string => {
  * 価格フォーマッター（通貨ペアに応じた小数点桁数）
  */
 export const formatPrice = (price: number, currencyPair?: string): string => {
-  if (isNaN(price)) return '0.0000';
+  if (isNaN(price)) {
+    return '0.0000';
+  }
 
   let decimals = 4;
 
@@ -55,7 +63,9 @@ export const formatPrice = (price: number, currencyPair?: string): string => {
  * 損益フォーマッター（プラス/マイナス表示）
  */
 export const formatProfit = (profit: number, showSign: boolean = true): string => {
-  if (isNaN(profit)) return '¥0';
+  if (isNaN(profit)) {
+    return '¥0';
+  }
 
   const sign = profit >= 0 ? '+' : '';
   const formatted = formatCurrency(Math.abs(profit));
@@ -93,7 +103,9 @@ export const formatDate = (timestamp: number): string => {
  * 短縮数値フォーマッター（1K, 1M, 1Bなど）
  */
 export const formatCompactNumber = (value: number): string => {
-  if (isNaN(value)) return '0';
+  if (isNaN(value)) {
+    return '0';
+  }
 
   const formatter = new Intl.NumberFormat('ja-JP', {
     notation: 'compact',
@@ -130,7 +142,9 @@ export const formatDuration = (startTime: number, endTime?: number): string => {
  * 勝率フォーマッター
  */
 export const formatWinRate = (winCount: number, totalCount: number): string => {
-  if (totalCount === 0) return '0.0%';
+  if (totalCount === 0) {
+    return '0.0%';
+  }
 
   const winRate = (winCount / totalCount) * 100;
   return formatPercentage(winRate, 1);
@@ -140,7 +154,9 @@ export const formatWinRate = (winCount: number, totalCount: number): string => {
  * pipsフォーマッター
  */
 export const formatPips = (pips: number): string => {
-  if (isNaN(pips)) return '0.0 pips';
+  if (isNaN(pips)) {
+    return '0.0 pips';
+  }
 
   const sign = pips >= 0 ? '+' : '';
   return `${sign}${pips.toFixed(1)} pips`;
@@ -150,7 +166,9 @@ export const formatPips = (pips: number): string => {
  * ロット数フォーマッター
  */
 export const formatLots = (lots: number): string => {
-  if (isNaN(lots)) return '0.00';
+  if (isNaN(lots)) {
+    return '0.00';
+  }
 
   return lots.toFixed(2);
 };

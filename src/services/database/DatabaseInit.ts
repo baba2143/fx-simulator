@@ -12,22 +12,37 @@ export class DatabaseInit {
 
   static async init(): Promise<void> {
     try {
+      // Prevent multiple initialization attempts
+      if (this.database) {
+        console.log('Database already initialized');
+        return;
+      }
+
+      console.log('Starting database initialization...');
       SQLite.enablePromise(true);
+      SQLite.DEBUG(false);
 
       this.database = await SQLite.openDatabase({
         name: 'FXSimulator.db',
         location: 'default',
       });
 
+      console.log('Database opened, creating tables...');
       await this.createTables();
       console.log('Database initialized successfully');
     } catch (error) {
       console.error('Database initialization error:', error);
-      throw error;
+      // Reset database reference on error
+      this.database = null;
+      throw new Error(`Failed to initialize database: ${error}`);
     }
   }
 
   private static async createTables(): Promise<void> {
+    if (!this.database) {
+      throw new Error('Database not opened');
+    }
+
     const queries = [
       // 価格データテーブル
       `CREATE TABLE IF NOT EXISTS price_data (
@@ -74,8 +89,15 @@ export class DatabaseInit {
        VALUES ('1', 1000000, 1000000)`,
     ];
 
-    for (const query of queries) {
-      await this.database!.executeSql(query);
+    try {
+      for (const query of queries) {
+        console.log('Executing query:', query.substring(0, 50) + '...');
+        await this.database.executeSql(query);
+      }
+      console.log('All tables created successfully');
+    } catch (error) {
+      console.error('Error creating tables:', error);
+      throw new Error(`Failed to create tables: ${error}`);
     }
   }
 

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-  Alert,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Goal, GoalType } from '../../store/slices/goalSlice';
 import { formatCurrency, formatPercentage } from '../../utils/formatters';
@@ -84,18 +77,14 @@ export const GoalCard: React.FC<GoalCardProps> = ({
   const daysRemaining = Math.ceil(remainingTime / (1000 * 60 * 60 * 24));
 
   const handleDelete = () => {
-    Alert.alert(
-      '目標を削除',
-      'この目標を削除してもよろしいですか？',
-      [
-        { text: 'キャンセル', style: 'cancel' },
-        {
-          text: '削除',
-          style: 'destructive',
-          onPress: () => onDelete(goal.id),
-        },
-      ]
-    );
+    Alert.alert('目標を削除', 'この目標を削除してもよろしいですか？', [
+      { text: 'キャンセル', style: 'cancel' },
+      {
+        text: '削除',
+        style: 'destructive',
+        onPress: () => onDelete(goal.id),
+      },
+    ]);
   };
 
   const handlePauseResume = () => {
@@ -111,9 +100,7 @@ export const GoalCard: React.FC<GoalCardProps> = ({
       <View style={styles.header}>
         <View style={styles.typeSection}>
           <Icon name={config.icon} size={24} color={config.color} />
-          <Text style={[styles.typeTitle, { color: config.color }]}>
-            {config.title}
-          </Text>
+          <Text style={[styles.typeTitle, { color: config.color }]}>{config.title}</Text>
         </View>
         <View style={styles.statusSection}>
           <Icon name={statusConfig.icon} size={20} color={statusConfig.color} />
@@ -126,20 +113,14 @@ export const GoalCard: React.FC<GoalCardProps> = ({
       <View style={styles.content}>
         <View style={styles.amountSection}>
           <Text style={styles.targetLabel}>目標金額</Text>
-          <Text style={styles.targetAmount}>
-            {formatCurrency(goal.targetAmount)}
-          </Text>
+          <Text style={styles.targetAmount}>{formatCurrency(goal.targetAmount)}</Text>
         </View>
 
         <View style={styles.progressSection}>
           <View style={styles.progressHeader}>
-            <Text style={styles.currentAmount}>
-              現在: {formatCurrency(goal.currentAmount)}
-            </Text>
-            <Text style={[
-              styles.progressPercentage,
-              { color: progress >= 100 ? '#4CAF50' : '#FFF' }
-            ]}>
+            <Text style={styles.currentAmount}>現在: {formatCurrency(goal.currentAmount)}</Text>
+            <Text
+              style={[styles.progressPercentage, { color: progress >= 100 ? '#4CAF50' : '#FFF' }]}>
               {formatPercentage(progress)}
             </Text>
           </View>
@@ -150,22 +131,16 @@ export const GoalCard: React.FC<GoalCardProps> = ({
           />
         </View>
 
-        {goal.description && (
-          <Text style={styles.description}>{goal.description}</Text>
-        )}
+        {goal.description && <Text style={styles.description}>{goal.description}</Text>}
 
         <View style={styles.timeSection}>
           {goal.status === 'active' && (
-            <Text style={[
-              styles.timeRemaining,
-              { color: isExpired ? '#F44336' : daysRemaining <= 1 ? '#FF9800' : '#B0B0B0' }
-            ]}>
-              {isExpired
-                ? '期限切れ'
-                : daysRemaining > 0
-                ? `残り${daysRemaining}日`
-                : '本日終了'
-              }
+            <Text
+              style={[
+                styles.timeRemaining,
+                { color: isExpired ? '#F44336' : daysRemaining <= 1 ? '#FF9800' : '#B0B0B0' },
+              ]}>
+              {isExpired ? '期限切れ' : daysRemaining > 0 ? `残り${daysRemaining}日` : '本日終了'}
             </Text>
           )}
           {goal.completedAt && (
@@ -180,31 +155,22 @@ export const GoalCard: React.FC<GoalCardProps> = ({
         {(goal.status === 'active' || goal.status === 'paused') && (
           <TouchableOpacity
             style={[styles.actionButton, { backgroundColor: '#FF9800' }]}
-            onPress={handlePauseResume}
-          >
-            <Icon
-              name={goal.status === 'active' ? 'pause' : 'play'}
-              size={18}
-              color="#FFF"
-            />
-            <Text style={styles.actionText}>
-              {goal.status === 'active' ? '一時停止' : '再開'}
-            </Text>
+            onPress={handlePauseResume}>
+            <Icon name={goal.status === 'active' ? 'pause' : 'play'} size={18} color="#FFF" />
+            <Text style={styles.actionText}>{goal.status === 'active' ? '一時停止' : '再開'}</Text>
           </TouchableOpacity>
         )}
 
         <TouchableOpacity
           style={[styles.actionButton, { backgroundColor: '#2196F3' }]}
-          onPress={() => onEdit(goal)}
-        >
+          onPress={() => onEdit(goal)}>
           <Icon name="pencil" size={18} color="#FFF" />
           <Text style={styles.actionText}>編集</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.actionButton, { backgroundColor: '#F44336' }]}
-          onPress={handleDelete}
-        >
+          onPress={handleDelete}>
           <Icon name="delete" size={18} color="#FFF" />
           <Text style={styles.actionText}>削除</Text>
         </TouchableOpacity>

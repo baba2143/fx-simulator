@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { RootStackParamList } from '../types';
+
+type SplashScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Splash'>;
 
 export const SplashScreen: React.FC = () => {
+  const navigation = useNavigation<SplashScreenNavigationProp>();
+
+  useEffect(() => {
+    // Navigate to DataImport screen after 2 seconds
+    const timer = setTimeout(() => {
+      navigation.replace('DataImport');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>FX Simulator</Text>

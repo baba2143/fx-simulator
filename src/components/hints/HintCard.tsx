@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Animated,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Hint, HintType, HintPriority } from '../../store/slices/hintSlice';
 import { formatTime } from '../../utils/formatters';
@@ -86,13 +80,7 @@ const PRIORITY_CONFIG: {
   },
 };
 
-export const HintCard: React.FC<HintCardProps> = ({
-  hint,
-  onAction,
-  onDismiss,
-  onRead,
-  style,
-}) => {
+export const HintCard: React.FC<HintCardProps> = ({ hint, onAction, onDismiss, onRead, style }) => {
   const [fadeAnim] = React.useState(new Animated.Value(0));
   const typeConfig = HINT_TYPE_CONFIG[hint.type];
   const priorityConfig = PRIORITY_CONFIG[hint.priority];
@@ -134,18 +122,11 @@ export const HintCard: React.FC<HintCardProps> = ({
         },
         isExpired && styles.expired,
         style,
-      ]}
-    >
+      ]}>
       <View style={styles.header}>
         <View style={styles.typeSection}>
-          <Icon
-            name={typeConfig.icon}
-            size={20}
-            color={typeConfig.color}
-          />
-          <Text style={[styles.typeTitle, { color: typeConfig.color }]}>
-            {typeConfig.title}
-          </Text>
+          <Icon name={typeConfig.icon} size={20} color={typeConfig.color} />
+          <Text style={[styles.typeTitle, { color: typeConfig.color }]}>{typeConfig.title}</Text>
         </View>
 
         <View style={styles.rightSection}>
@@ -158,10 +139,7 @@ export const HintCard: React.FC<HintCardProps> = ({
             </View>
           )}
 
-          <TouchableOpacity
-            style={styles.dismissButton}
-            onPress={handleDismiss}
-          >
+          <TouchableOpacity style={styles.dismissButton} onPress={handleDismiss}>
             <Icon name="close" size={16} color="#B0B0B0" />
           </TouchableOpacity>
         </View>
@@ -174,22 +152,15 @@ export const HintCard: React.FC<HintCardProps> = ({
         {hint.metadata?.confidence && (
           <View style={styles.confidenceSection}>
             <Icon name="target" size={14} color="#B0B0B0" />
-            <Text style={styles.confidenceText}>
-              信頼度: {hint.metadata.confidence}%
-            </Text>
+            <Text style={styles.confidenceText}>信頼度: {hint.metadata.confidence}%</Text>
           </View>
         )}
 
         <View style={styles.footer}>
-          <Text style={styles.timestamp}>
-            {formatTime(hint.createdAt)}
-          </Text>
+          <Text style={styles.timestamp}>{formatTime(hint.createdAt)}</Text>
 
           {hint.expiresAt && (
-            <Text style={[
-              styles.expiryText,
-              isExpired && styles.expiredText
-            ]}>
+            <Text style={[styles.expiryText, isExpired && styles.expiredText]}>
               {isExpired ? '期限切れ' : `期限: ${formatTime(hint.expiresAt)}`}
             </Text>
           )}
@@ -197,12 +168,8 @@ export const HintCard: React.FC<HintCardProps> = ({
 
         {hint.isActionable && hint.actionText && !isExpired && (
           <TouchableOpacity
-            style={[
-              styles.actionButton,
-              { backgroundColor: priorityConfig.color }
-            ]}
-            onPress={handleAction}
-          >
+            style={[styles.actionButton, { backgroundColor: priorityConfig.color }]}
+            onPress={handleAction}>
             <Icon name="arrow-right" size={16} color="#FFF" />
             <Text style={styles.actionText}>{hint.actionText}</Text>
           </TouchableOpacity>
@@ -212,9 +179,7 @@ export const HintCard: React.FC<HintCardProps> = ({
       {hint.metadata?.currencyPair && (
         <View style={styles.metadataSection}>
           <Icon name="currency-usd" size={12} color="#B0B0B0" />
-          <Text style={styles.metadataText}>
-            {hint.metadata.currencyPair}
-          </Text>
+          <Text style={styles.metadataText}>{hint.metadata.currencyPair}</Text>
         </View>
       )}
     </Animated.View>

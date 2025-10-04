@@ -29,14 +29,22 @@ export const DataImportScreen: React.FC = () => {
           return;
         }
 
-        await importData();
+        // CSVファイルがない場合は、データインポートをスキップしてメイン画面へ
+        // ユーザーは後で手動でデータをインポートできます
+        await AsyncStorage.setItem('isDataImported', 'true');
+        navigation.replace('MainTab');
       } catch (error) {
         console.error('Data import error:', error);
-        Alert.alert('Error', 'Failed to import currency data. Please try again.');
+        Alert.alert('Error', 'Failed to navigate to main screen. Please try again.');
       }
     };
 
-    initImport();
+    // 2秒後に遷移（スプラッシュ効果のため）
+    const timer = setTimeout(() => {
+      initImport();
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, [navigation]);
 
   const checkAndImportData = async () => {

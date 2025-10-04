@@ -7,29 +7,34 @@ export class DatabaseService {
     startDate: Date,
     endDate: Date,
   ): Promise<PriceData[]> {
-    const db = await DatabaseInit.getDatabase();
-    const result = await db.executeSql(
-      `SELECT * FROM price_data
-       WHERE currency_pair = ? AND date >= ? AND date <= ?
-       ORDER BY date ASC`,
-      [pair, startDate.getTime(), endDate.getTime()],
-    );
+    try {
+      const db = await DatabaseInit.getDatabase();
+      const result = await db.executeSql(
+        `SELECT * FROM price_data
+         WHERE currency_pair = ? AND date >= ? AND date <= ?
+         ORDER BY date ASC`,
+        [pair, startDate.getTime(), endDate.getTime()],
+      );
 
-    const priceData: PriceData[] = [];
-    for (let i = 0; i < result[0].rows.length; i++) {
-      const row = result[0].rows.item(i);
-      priceData.push({
-        id: row.id,
-        date: row.date,
-        currencyPair: row.currency_pair,
-        open: row.open,
-        high: row.high,
-        low: row.low,
-        close: row.close,
-        createdAt: row.created_at,
-      });
+      const priceData: PriceData[] = [];
+      for (let i = 0; i < result[0].rows.length; i++) {
+        const row = result[0].rows.item(i);
+        priceData.push({
+          id: row.id,
+          date: row.date,
+          currencyPair: row.currency_pair,
+          open: row.open,
+          high: row.high,
+          low: row.low,
+          close: row.close,
+          createdAt: row.created_at,
+        });
+      }
+      return priceData;
+    } catch (error) {
+      console.error('Error getting price data:', error);
+      throw new Error(`Failed to get price data: ${error}`);
     }
-    return priceData;
   }
 
   static async getLatestPrice(pair: CurrencyPair): Promise<PriceData | null> {
@@ -58,16 +63,26 @@ export class DatabaseService {
   }
 
   static async getAccount(): Promise<Account> {
-    const db = await DatabaseInit.getDatabase();
-    const result = await db.executeSql('SELECT * FROM account WHERE id = "1"');
-    const row = result[0].rows.item(0);
-    return {
-      id: row.id,
-      balance: row.balance,
-      initialBalance: row.initial_balance,
-      createdAt: row.created_at,
-      updatedAt: row.updated_at,
-    };
+    try {
+      const db = await DatabaseInit.getDatabase();
+      const result = await db.executeSql('SELECT * FROM account WHERE id = "1"');
+
+      if (result[0].rows.length === 0) {
+        throw new Error('No account found');
+      }
+
+      const row = result[0].rows.item(0);
+      return {
+        id: row.id,
+        balance: row.balance,
+        initialBalance: row.initial_balance,
+        createdAt: row.created_at,
+        updatedAt: row.updated_at,
+      };
+    } catch (error) {
+      console.error('Error getting account:', error);
+      throw new Error(`Failed to get account: ${error}`);
+    }
   }
 
   static async updateAccountBalance(balance: number): Promise<void> {

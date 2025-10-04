@@ -40,13 +40,7 @@ interface StatsCardProps {
   subtitle?: string;
 }
 
-const StatsCard: React.FC<StatsCardProps> = ({
-  title,
-  value,
-  icon,
-  color,
-  subtitle,
-}) => (
+const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon, color, subtitle }) => (
   <View style={[styles.statsCard, { borderLeftColor: color }]}>
     <View style={styles.statsContent}>
       <View style={styles.statsTextContent}>
@@ -77,7 +71,7 @@ export const GoalsScreen: React.FC = () => {
     useCallback(() => {
       loadGoals();
       updateActiveGoalsProgress();
-    }, [])
+    }, []),
   );
 
   const initializeDatabase = async () => {
@@ -107,12 +101,14 @@ export const GoalsScreen: React.FC = () => {
     // 現在のアカウント情報から進捗を更新
     Object.values(activeGoals).forEach(goal => {
       if (goal && totalProfit !== undefined) {
-        dispatch(updateGoalProgress({
-          goalId: goal.id,
-          profit: totalProfit,
-          tradesCount: 0, // TODO: 実際の取引数を取得
-          winRate: 0, // TODO: 実際の勝率を取得
-        }));
+        dispatch(
+          updateGoalProgress({
+            goalId: goal.id,
+            profit: totalProfit,
+            tradesCount: 0, // TODO: 実際の取引数を取得
+            winRate: 0, // TODO: 実際の勝率を取得
+          }),
+        );
       }
     });
   };
@@ -131,8 +127,10 @@ export const GoalsScreen: React.FC = () => {
       if (existingActiveGoal && !editingGoal) {
         Alert.alert(
           '既存の目標があります',
-          `${goalData.type === 'daily' ? '日次' : goalData.type === 'weekly' ? '週次' : '月次'}目標が既に存在します。先に完了または削除してください。`,
-          [{ text: 'OK' }]
+          `${
+            goalData.type === 'daily' ? '日次' : goalData.type === 'weekly' ? '週次' : '月次'
+          }目標が既に存在します。先に完了または削除してください。`,
+          [{ text: 'OK' }],
         );
         return;
       }
@@ -223,10 +221,7 @@ export const GoalsScreen: React.FC = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>目標設定</Text>
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => setShowCreateModal(true)}
-        >
+        <TouchableOpacity style={styles.addButton} onPress={() => setShowCreateModal(true)}>
           <Icon name="plus" size={24} color="#FFF" />
         </TouchableOpacity>
       </View>
@@ -234,10 +229,7 @@ export const GoalsScreen: React.FC = () => {
       <ScrollView
         style={styles.content}
         showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         {/* 統計カード */}
         <View style={styles.statsSection}>
           <StatsCard
@@ -268,8 +260,11 @@ export const GoalsScreen: React.FC = () => {
           <View style={styles.activeGoalsSection}>
             <Text style={styles.sectionTitle}>現在の目標</Text>
             {Object.entries(activeGoals).map(([type, goal]) => {
-              if (!goal) return null;
-              const progress = goal.targetAmount > 0 ? (goal.currentAmount / goal.targetAmount) * 100 : 0;
+              if (!goal) {
+                return null;
+              }
+              const progress =
+                goal.targetAmount > 0 ? (goal.currentAmount / goal.targetAmount) * 100 : 0;
               const typeConfig = {
                 daily: { title: '日次', color: '#FF6B6B' },
                 weekly: { title: '週次', color: '#4ECDC4' },
@@ -291,9 +286,7 @@ export const GoalsScreen: React.FC = () => {
                     color={progress >= 100 ? '#4CAF50' : typeConfig.color}
                     height={6}
                   />
-                  <Text style={styles.activeGoalProgress}>
-                    {formatPercentage(progress)} 達成
-                  </Text>
+                  <Text style={styles.activeGoalProgress}>{formatPercentage(progress)} 達成</Text>
                 </View>
               );
             })}
@@ -302,21 +295,12 @@ export const GoalsScreen: React.FC = () => {
 
         {/* タブ */}
         <View style={styles.tabSection}>
-          {['active', 'completed', 'all'].map((tab) => (
+          {['active', 'completed', 'all'].map(tab => (
             <TouchableOpacity
               key={tab}
-              style={[
-                styles.tab,
-                selectedTab === tab && styles.activeTab,
-              ]}
-              onPress={() => setSelectedTab(tab as typeof selectedTab)}
-            >
-              <Text
-                style={[
-                  styles.tabText,
-                  selectedTab === tab && styles.activeTabText,
-                ]}
-              >
+              style={[styles.tab, selectedTab === tab && styles.activeTab]}
+              onPress={() => setSelectedTab(tab as typeof selectedTab)}>
+              <Text style={[styles.tabText, selectedTab === tab && styles.activeTabText]}>
                 {tab === 'active' ? 'アクティブ' : tab === 'completed' ? '完了済み' : '全て'}
               </Text>
             </TouchableOpacity>
@@ -325,7 +309,7 @@ export const GoalsScreen: React.FC = () => {
 
         {/* 目標リスト */}
         {filteredGoals.length > 0 ? (
-          filteredGoals.map((goal) => (
+          filteredGoals.map(goal => (
             <GoalCard
               key={goal.id}
               goal={goal}
@@ -351,8 +335,7 @@ export const GoalsScreen: React.FC = () => {
             {selectedTab === 'active' && (
               <TouchableOpacity
                 style={styles.createFirstGoalButton}
-                onPress={() => setShowCreateModal(true)}
-              >
+                onPress={() => setShowCreateModal(true)}>
                 <Text style={styles.createFirstGoalText}>最初の目標を作成</Text>
               </TouchableOpacity>
             )}

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, processColor } from 'react-native';
 import { CandleStickChart } from 'react-native-charts-wrapper';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../store';
@@ -69,14 +69,14 @@ export const CandlestickChart: React.FC<CandlestickChartProps> = ({ data, height
 
   // Chart configuration
   const chartConfig = {
-    backgroundColor: '#1E1E1E',
-    gridBackgroundColor: '#1E1E1E',
+    backgroundColor: processColor('#1E1E1E'),
+    gridBackgroundColor: processColor('#1E1E1E'),
 
     xAxis: {
       enabled: true,
       drawGridLines: showGrid,
-      gridColor: '#333333',
-      textColor: '#FFFFFF',
+      gridColor: processColor('#333333'),
+      textColor: processColor('#FFFFFF'),
       position: 'BOTTOM',
       granularity: 1,
       granularityEnabled: true,
@@ -86,8 +86,8 @@ export const CandlestickChart: React.FC<CandlestickChartProps> = ({ data, height
       left: {
         enabled: true,
         drawGridLines: showGrid,
-        gridColor: '#333333',
-        textColor: '#FFFFFF',
+        gridColor: processColor('#333333'),
+        textColor: processColor('#FFFFFF'),
         position: 'OUTSIDE_CHART',
       },
       right: {
@@ -97,7 +97,7 @@ export const CandlestickChart: React.FC<CandlestickChartProps> = ({ data, height
 
     legend: {
       enabled: true,
-      textColor: '#FFFFFF',
+      textColor: processColor('#FFFFFF'),
       position: 'BELOW_CHART_CENTER',
     },
 
@@ -112,8 +112,8 @@ export const CandlestickChart: React.FC<CandlestickChartProps> = ({ data, height
 
     marker: {
       enabled: true,
-      markerColor: '#FFBB33',
-      textColor: '#FFFFFF',
+      markerColor: processColor('#FFBB33'),
+      textColor: processColor('#FFFFFF'),
     },
   };
 

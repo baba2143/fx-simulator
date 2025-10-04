@@ -36,7 +36,7 @@ export const CURRENCY_PAIR_CONFIG: Record<CurrencyPair, CurrencyPairInfo> = {
     basePrice: 1.18,
     volatility: 0.003,
     digits: 5,
-    spread: 0.00010,
+    spread: 0.0001,
   },
   EURJPY: {
     symbol: 'EURJPY',
@@ -96,7 +96,7 @@ export const CURRENCY_PAIR_CONFIG: Record<CurrencyPair, CurrencyPairInfo> = {
     basePrice: 1850.0,
     volatility: 15.0,
     digits: 2,
-    spread: 0.50,
+    spread: 0.5,
   },
 };
 
@@ -110,7 +110,9 @@ export const getAllCurrencyPairs = (): CurrencyPair[] => {
 /**
  * カテゴリ別に通貨ペアを取得
  */
-export const getCurrencyPairsByCategory = (category: 'major' | 'minor' | 'precious'): CurrencyPair[] => {
+export const getCurrencyPairsByCategory = (
+  category: 'major' | 'minor' | 'precious',
+): CurrencyPair[] => {
   return Object.values(CURRENCY_PAIR_CONFIG)
     .filter(config => config.category === category)
     .map(config => config.symbol);

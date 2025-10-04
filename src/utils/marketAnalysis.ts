@@ -68,7 +68,7 @@ export const analyzeMarketCondition = (data: PriceData[]): MarketCondition => {
     return Math.max(
       candle.high - candle.low,
       Math.abs(candle.high - prevClose),
-      Math.abs(candle.low - prevClose)
+      Math.abs(candle.low - prevClose),
     );
   });
 
@@ -77,8 +77,11 @@ export const analyzeMarketCondition = (data: PriceData[]): MarketCondition => {
   const volatilityPercent = (atr / currentPrice) * 100;
 
   let volatility: 'low' | 'medium' | 'high' = 'medium';
-  if (volatilityPercent < 0.5) volatility = 'low';
-  else if (volatilityPercent > 1.5) volatility = 'high';
+  if (volatilityPercent < 0.5) {
+    volatility = 'low';
+  } else if (volatilityPercent > 1.5) {
+    volatility = 'high';
+  }
 
   // モメンタム分析
   const momentum = analyzeMomentum(data);
@@ -99,26 +102,36 @@ export const analyzeMarketCondition = (data: PriceData[]): MarketCondition => {
  * トレーディングシグナルを生成
  */
 export const generateTradingSignals = (data: PriceData[]): TradingSignal[] => {
-  if (data.length < 50) return [];
+  if (data.length < 50) {
+    return [];
+  }
 
   const signals: TradingSignal[] = [];
   const currentPrice = data[data.length - 1];
 
   // RSI分析
   const rsiSignal = analyzeRSI(data);
-  if (rsiSignal) signals.push(rsiSignal);
+  if (rsiSignal) {
+    signals.push(rsiSignal);
+  }
 
   // MACD分析
   const macdSignal = analyzeMACD(data);
-  if (macdSignal) signals.push(macdSignal);
+  if (macdSignal) {
+    signals.push(macdSignal);
+  }
 
   // 移動平均クロスオーバー
   const maSignal = analyzeMovingAverageCrossover(data);
-  if (maSignal) signals.push(maSignal);
+  if (maSignal) {
+    signals.push(maSignal);
+  }
 
   // サポート・レジスタンスブレイクアウト
   const breakoutSignal = analyzeBreakout(data);
-  if (breakoutSignal) signals.push(breakoutSignal);
+  if (breakoutSignal) {
+    signals.push(breakoutSignal);
+  }
 
   return signals.sort((a, b) => b.confidence - a.confidence);
 };
@@ -127,21 +140,29 @@ export const generateTradingSignals = (data: PriceData[]): TradingSignal[] => {
  * チャートパターンを検出
  */
 export const detectPatterns = (data: PriceData[]): PatternDetection[] => {
-  if (data.length < 20) return [];
+  if (data.length < 20) {
+    return [];
+  }
 
   const patterns: PatternDetection[] = [];
 
   // ダブルトップ/ダブルボトム
   const doublePattern = detectDoubleTopBottom(data);
-  if (doublePattern) patterns.push(doublePattern);
+  if (doublePattern) {
+    patterns.push(doublePattern);
+  }
 
   // ヘッドアンドショルダー
   const headShoulderPattern = detectHeadAndShoulders(data);
-  if (headShoulderPattern) patterns.push(headShoulderPattern);
+  if (headShoulderPattern) {
+    patterns.push(headShoulderPattern);
+  }
 
   // 三角形パターン
   const trianglePattern = detectTriangle(data);
-  if (trianglePattern) patterns.push(trianglePattern);
+  if (trianglePattern) {
+    patterns.push(trianglePattern);
+  }
 
   return patterns;
 };
@@ -149,21 +170,29 @@ export const detectPatterns = (data: PriceData[]): PatternDetection[] => {
 // 以下、補助関数
 
 const analyzeMomentum = (data: PriceData[]): 'increasing' | 'decreasing' | 'stable' => {
-  if (data.length < 10) return 'stable';
+  if (data.length < 10) {
+    return 'stable';
+  }
 
   const recent10 = data.slice(-10);
-  const priceChanges = recent10.slice(1).map((candle, index) =>
-    candle.close - recent10[index].close
-  );
+  const priceChanges = recent10
+    .slice(1)
+    .map((candle, index) => candle.close - recent10[index].close);
 
   const avgChange = priceChanges.reduce((sum, change) => sum + change, 0) / priceChanges.length;
 
-  if (Math.abs(avgChange) < 0.001) return 'stable';
+  if (Math.abs(avgChange) < 0.001) {
+    return 'stable';
+  }
   return avgChange > 0 ? 'increasing' : 'decreasing';
 };
 
-const findSupportResistance = (data: PriceData[]): { support: number | null; resistance: number | null } => {
-  if (data.length < 10) return { support: null, resistance: null };
+const findSupportResistance = (
+  data: PriceData[],
+): { support: number | null; resistance: number | null } => {
+  if (data.length < 10) {
+    return { support: null, resistance: null };
+  }
 
   // 直近の高値・安値を検索
   const highs = data.map(d => d.high);
@@ -177,7 +206,9 @@ const findSupportResistance = (data: PriceData[]): { support: number | null; res
 
 const analyzeRSI = (data: PriceData[]): TradingSignal | null => {
   const rsi = calculateRSI(data, 14);
-  if (rsi.length === 0) return null;
+  if (rsi.length === 0) {
+    return null;
+  }
 
   const latestRSI = rsi[rsi.length - 1];
   const currentPrice = data[data.length - 1];
@@ -207,7 +238,9 @@ const analyzeRSI = (data: PriceData[]): TradingSignal | null => {
 
 const analyzeMACD = (data: PriceData[]): TradingSignal | null => {
   const macd = calculateMACD(data);
-  if (macd.length < 2) return null;
+  if (macd.length < 2) {
+    return null;
+  }
 
   const latest = macd[macd.length - 1];
   const previous = macd[macd.length - 2];
@@ -241,7 +274,9 @@ const analyzeMovingAverageCrossover = (data: PriceData[]): TradingSignal | null 
   const sma20 = calculateSMA(data, 20);
   const sma50 = calculateSMA(data, 50);
 
-  if (sma20.length < 2 || sma50.length < 2) return null;
+  if (sma20.length < 2 || sma50.length < 2) {
+    return null;
+  }
 
   const latestSma20 = sma20[sma20.length - 1];
   const latestSma50 = sma50[sma50.length - 1];
@@ -276,7 +311,9 @@ const analyzeMovingAverageCrossover = (data: PriceData[]): TradingSignal | null 
 };
 
 const analyzeBreakout = (data: PriceData[]): TradingSignal | null => {
-  if (data.length < 20) return null;
+  if (data.length < 20) {
+    return null;
+  }
 
   const recent20 = data.slice(-20);
   const currentPrice = data[data.length - 1];

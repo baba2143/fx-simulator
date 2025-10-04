@@ -51,15 +51,12 @@ const StatsCard: React.FC<StatsCardProps> = ({
   <TouchableOpacity
     style={[styles.statsCard, { borderLeftColor: color }]}
     onPress={onPress}
-    disabled={!onPress}
-  >
+    disabled={!onPress}>
     <View style={styles.statsContent}>
       <View style={styles.statsTextContent}>
         <Text style={styles.statsTitle}>{title}</Text>
         <Text style={[styles.statsValue, { color }]}>{value}</Text>
-        {improvement && (
-          <Text style={styles.improvementText}>{improvement}</Text>
-        )}
+        {improvement && <Text style={styles.improvementText}>{improvement}</Text>}
       </View>
       <Icon name={icon} size={32} color={color} />
     </View>
@@ -69,7 +66,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
 export const RankingScreen: React.FC = () => {
   const dispatch = useDispatch();
   const { personalRecords, currentMetrics, comparisonData, achievements } = useSelector(
-    (state: RootState) => state.ranking
+    (state: RootState) => state.ranking,
   );
   const { balance, totalProfit } = useSelector((state: RootState) => state.account.data || {});
 
@@ -85,7 +82,7 @@ export const RankingScreen: React.FC = () => {
     useCallback(() => {
       loadRankingData();
       calculateCurrentMetrics();
-    }, [])
+    }, []),
   );
 
   const initializeDatabase = async () => {
@@ -136,15 +133,34 @@ export const RankingScreen: React.FC = () => {
   const checkForNewRecords = async (metrics: PerformanceMetrics) => {
     try {
       const categories: { category: RankingCategory; value: number; description: string }[] = [
-        { category: 'profit', value: metrics.totalProfit, description: `${selectedPeriod}の累積利益記録` },
+        {
+          category: 'profit',
+          value: metrics.totalProfit,
+          description: `${selectedPeriod}の累積利益記録`,
+        },
         { category: 'winRate', value: metrics.winRate, description: `${selectedPeriod}の勝率記録` },
-        { category: 'profitFactor', value: metrics.profitFactor, description: `${selectedPeriod}のプロフィットファクター記録` },
-        { category: 'consistency', value: metrics.consistencyScore, description: `${selectedPeriod}の一貫性スコア記録` },
-        { category: 'riskReward', value: metrics.averageRiskReward, description: `${selectedPeriod}のリスクリワード比記録` },
+        {
+          category: 'profitFactor',
+          value: metrics.profitFactor,
+          description: `${selectedPeriod}のプロフィットファクター記録`,
+        },
+        {
+          category: 'consistency',
+          value: metrics.consistencyScore,
+          description: `${selectedPeriod}の一貫性スコア記録`,
+        },
+        {
+          category: 'riskReward',
+          value: metrics.averageRiskReward,
+          description: `${selectedPeriod}のリスクリワード比記録`,
+        },
       ];
 
       for (const { category, value, description } of categories) {
-        const existingRecord = await RankingDatabase.getBestRecordForCategory(category, selectedPeriod);
+        const existingRecord = await RankingDatabase.getBestRecordForCategory(
+          category,
+          selectedPeriod,
+        );
 
         if (!existingRecord || value > existingRecord.value) {
           const record: Omit<PersonalRecord, 'id'> = {
@@ -154,7 +170,9 @@ export const RankingScreen: React.FC = () => {
             period: selectedPeriod,
             description,
             previousBest: existingRecord?.value,
-            improvement: existingRecord ? ((value - existingRecord.value) / existingRecord.value) * 100 : 100,
+            improvement: existingRecord
+              ? ((value - existingRecord.value) / existingRecord.value) * 100
+              : 100,
             metadata: {
               tradesCount: metrics.tradesCount,
             },
@@ -183,10 +201,10 @@ export const RankingScreen: React.FC = () => {
     Alert.alert(
       '個人記録詳細',
       `${record.description}\n\n` +
-      `達成日: ${new Date(record.achievedAt).toLocaleDateString('ja-JP')}\n` +
-      (record.previousBest ? `前回記録: ${record.previousBest}\n` : '') +
-      (record.improvement ? `向上率: +${record.improvement.toFixed(1)}%` : ''),
-      [{ text: 'OK' }]
+        `達成日: ${new Date(record.achievedAt).toLocaleDateString('ja-JP')}\n` +
+        (record.previousBest ? `前回記録: ${record.previousBest}\n` : '') +
+        (record.improvement ? `向上率: +${record.improvement.toFixed(1)}%` : ''),
+      [{ text: 'OK' }],
     );
   };
 
@@ -201,24 +219,22 @@ export const RankingScreen: React.FC = () => {
   // 統計データを準備
   const totalRecordsCount = personalRecords.length;
   const recordsThisMonth = personalRecords.filter(
-    record => record.achievedAt > Date.now() - (30 * 24 * 60 * 60 * 1000)
+    record => record.achievedAt > Date.now() - 30 * 24 * 60 * 60 * 1000,
   ).length;
   const bestCategory = personalRecords.reduce((acc, record) => {
     acc[record.category] = (acc[record.category] || 0) + 1;
     return acc;
   }, {} as { [key: string]: number });
-  const mostActiveCategory = Object.keys(bestCategory).length > 0
-    ? Object.keys(bestCategory).reduce((a, b) => bestCategory[a] > bestCategory[b] ? a : b)
-    : null;
+  const mostActiveCategory =
+    Object.keys(bestCategory).length > 0
+      ? Object.keys(bestCategory).reduce((a, b) => (bestCategory[a] > bestCategory[b] ? a : b))
+      : null;
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>ランキング・記録</Text>
-        <TouchableOpacity
-          style={styles.refreshButton}
-          onPress={onRefresh}
-        >
+        <TouchableOpacity style={styles.refreshButton} onPress={onRefresh}>
           <Icon name="refresh" size={24} color="#FFF" />
         </TouchableOpacity>
       </View>
@@ -226,10 +242,7 @@ export const RankingScreen: React.FC = () => {
       <ScrollView
         style={styles.content}
         showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         {/* アチーブメント通知 */}
         {(achievements.newRecord || achievements.rankImprovement) && (
           <View style={styles.achievementBanner}>
@@ -300,9 +313,7 @@ export const RankingScreen: React.FC = () => {
             <View style={styles.emptyState}>
               <Icon name="trophy-outline" size={64} color="#666" />
               <Text style={styles.emptyTitle}>記録がありません</Text>
-              <Text style={styles.emptySubtitle}>
-                取引を続けて個人記録を作成しましょう
-              </Text>
+              <Text style={styles.emptySubtitle}>取引を続けて個人記録を作成しましょう</Text>
             </View>
           )}
         </View>
@@ -311,43 +322,42 @@ export const RankingScreen: React.FC = () => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>カテゴリ別パフォーマンス</Text>
           <View style={styles.categoryGrid}>
-            {(['profit', 'winRate', 'profitFactor', 'consistency'] as RankingCategory[]).map((category) => {
-              const record = personalRecords.find(r => r.category === category && r.period === selectedPeriod);
-              const isSelected = selectedCategory === category;
+            {(['profit', 'winRate', 'profitFactor', 'consistency'] as RankingCategory[]).map(
+              category => {
+                const record = personalRecords.find(
+                  r => r.category === category && r.period === selectedPeriod,
+                );
+                const isSelected = selectedCategory === category;
 
-              const categoryConfig = {
-                profit: { icon: 'trending-up', title: '利益', color: '#4CAF50' },
-                winRate: { icon: 'target', title: '勝率', color: '#2196F3' },
-                profitFactor: { icon: 'calculator-variant', title: 'PF', color: '#FF9800' },
-                consistency: { icon: 'chart-line-variant', title: '一貫性', color: '#9C27B0' },
-              }[category];
+                const categoryConfig = {
+                  profit: { icon: 'trending-up', title: '利益', color: '#4CAF50' },
+                  winRate: { icon: 'target', title: '勝率', color: '#2196F3' },
+                  profitFactor: { icon: 'calculator-variant', title: 'PF', color: '#FF9800' },
+                  consistency: { icon: 'chart-line-variant', title: '一貫性', color: '#9C27B0' },
+                }[category];
 
-              return (
-                <TouchableOpacity
-                  key={category}
-                  style={[
-                    styles.categoryCard,
-                    isSelected && { borderColor: categoryConfig.color },
-                  ]}
-                  onPress={() => setSelectedCategory(category)}
-                >
-                  <Icon
-                    name={categoryConfig.icon}
-                    size={24}
-                    color={categoryConfig.color}
-                  />
-                  <Text style={styles.categoryTitle}>{categoryConfig.title}</Text>
-                  <Text style={styles.categoryValue}>
-                    {record ? record.value.toFixed(category === 'winRate' ? 1 : 2) : '---'}
-                  </Text>
-                  {record && record.improvement && (
-                    <Text style={styles.categoryImprovement}>
-                      +{record.improvement.toFixed(1)}%
+                return (
+                  <TouchableOpacity
+                    key={category}
+                    style={[
+                      styles.categoryCard,
+                      isSelected && { borderColor: categoryConfig.color },
+                    ]}
+                    onPress={() => setSelectedCategory(category)}>
+                    <Icon name={categoryConfig.icon} size={24} color={categoryConfig.color} />
+                    <Text style={styles.categoryTitle}>{categoryConfig.title}</Text>
+                    <Text style={styles.categoryValue}>
+                      {record ? record.value.toFixed(category === 'winRate' ? 1 : 2) : '---'}
                     </Text>
-                  )}
-                </TouchableOpacity>
-              );
-            })}
+                    {record && record.improvement && (
+                      <Text style={styles.categoryImprovement}>
+                        +{record.improvement.toFixed(1)}%
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                );
+              },
+            )}
           </View>
         </View>
       </ScrollView>

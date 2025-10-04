@@ -61,9 +61,17 @@ export interface RankingState {
   error: string | null;
 }
 
-const createEmptyRankings = (): { [key in RankingPeriod]: { [key in RankingCategory]: RankingEntry[] } } => {
+const createEmptyRankings = (): {
+  [key in RankingPeriod]: { [key in RankingCategory]: RankingEntry[] };
+} => {
   const periods: RankingPeriod[] = ['daily', 'weekly', 'monthly', 'yearly', 'all-time'];
-  const categories: RankingCategory[] = ['profit', 'winRate', 'profitFactor', 'consistency', 'riskReward'];
+  const categories: RankingCategory[] = [
+    'profit',
+    'winRate',
+    'profitFactor',
+    'consistency',
+    'riskReward',
+  ];
 
   const rankings: any = {};
   periods.forEach(period => {
@@ -115,7 +123,7 @@ export const rankingSlice = createSlice({
 
       // 同じカテゴリ・期間の古い記録を削除
       state.personalRecords = state.personalRecords.filter(
-        r => !(r.category === record.category && r.period === record.period)
+        r => !(r.category === record.category && r.period === record.period),
       );
 
       state.personalRecords.push(record);
@@ -125,12 +133,22 @@ export const rankingSlice = createSlice({
       state.personalRecords.sort((a, b) => b.achievedAt - a.achievedAt);
     },
 
-    updateRanking: (state, action: PayloadAction<{ period: RankingPeriod; category: RankingCategory; entries: RankingEntry[] }>) => {
+    updateRanking: (
+      state,
+      action: PayloadAction<{
+        period: RankingPeriod;
+        category: RankingCategory;
+        entries: RankingEntry[];
+      }>,
+    ) => {
       const { period, category, entries } = action.payload;
       state.rankings[period][category] = entries.sort((a, b) => a.rank - b.rank);
     },
 
-    setCurrentMetrics: (state, action: PayloadAction<{ period: RankingPeriod; metrics: PerformanceMetrics }>) => {
+    setCurrentMetrics: (
+      state,
+      action: PayloadAction<{ period: RankingPeriod; metrics: PerformanceMetrics }>,
+    ) => {
       const { period, metrics } = action.payload;
       state.currentMetrics[period] = metrics;
     },
@@ -139,7 +157,7 @@ export const rankingSlice = createSlice({
       state.achievements = { ...state.achievements, ...action.payload };
     },
 
-    clearAchievements: (state) => {
+    clearAchievements: state => {
       state.achievements = {
         newRecord: false,
         rankImprovement: false,
@@ -148,40 +166,67 @@ export const rankingSlice = createSlice({
       };
     },
 
-    setPeriodComparison: (state, action: PayloadAction<{ period: RankingPeriod; metrics: PerformanceMetrics | null }[]>) => {
+    setPeriodComparison: (
+      state,
+      action: PayloadAction<{ period: RankingPeriod; metrics: PerformanceMetrics | null }[]>,
+    ) => {
       state.comparisonData.periodComparison = action.payload;
     },
 
-    setCategoryComparison: (state, action: PayloadAction<{ category: RankingCategory; current: number; best: number }[]>) => {
+    setCategoryComparison: (
+      state,
+      action: PayloadAction<{ category: RankingCategory; current: number; best: number }[]>,
+    ) => {
       state.comparisonData.categoryComparison = action.payload;
     },
 
-    calculateConsistencyScore: (state, action: PayloadAction<{ period: RankingPeriod; dailyReturns: number[] }>) => {
+    calculateConsistencyScore: (
+      state,
+      action: PayloadAction<{ period: RankingPeriod; dailyReturns: number[] }>,
+    ) => {
       const { period, dailyReturns } = action.payload;
 
-      if (dailyReturns.length === 0) return;
+      if (dailyReturns.length === 0) {
+        return;
+      }
 
       // シャープレシオ的な一貫性スコアを計算
       const avgReturn = dailyReturns.reduce((sum, ret) => sum + ret, 0) / dailyReturns.length;
-      const variance = dailyReturns.reduce((sum, ret) => sum + Math.pow(ret - avgReturn, 2), 0) / dailyReturns.length;
+      const variance =
+        dailyReturns.reduce((sum, ret) => sum + Math.pow(ret - avgReturn, 2), 0) /
+        dailyReturns.length;
       const stdDev = Math.sqrt(variance);
 
       const consistencyScore = stdDev > 0 ? (avgReturn / stdDev) * 100 : 0;
 
       if (state.currentMetrics[period]) {
-        state.currentMetrics[period]!.consistencyScore = Math.max(0, Math.min(100, consistencyScore + 50)); // 0-100スケール
+        state.currentMetrics[period]!.consistencyScore = Math.max(
+          0,
+          Math.min(100, consistencyScore + 50),
+        ); // 0-100スケール
       }
     },
 
-    updatePersonalBest: (state, action: PayloadAction<{ category: RankingCategory; period: RankingPeriod; newValue: number; description: string }>) => {
+    updatePersonalBest: (
+      state,
+      action: PayloadAction<{
+        category: RankingCategory;
+        period: RankingPeriod;
+        newValue: number;
+        description: string;
+      }>,
+    ) => {
       const { category, period, newValue, description } = action.payload;
 
       // 既存の記録を検索
-      const existingRecord = state.personalRecords.find(r => r.category === category && r.period === period);
+      const existingRecord = state.personalRecords.find(
+        r => r.category === category && r.period === period,
+      );
 
       if (!existingRecord || newValue > existingRecord.value) {
         const previousBest = existingRecord?.value || 0;
-        const improvement = previousBest > 0 ? ((newValue - previousBest) / previousBest) * 100 : 100;
+        const improvement =
+          previousBest > 0 ? ((newValue - previousBest) / previousBest) * 100 : 100;
 
         const record: PersonalRecord = {
           id: `record_${Date.now()}_${category}_${period}`,
@@ -196,7 +241,7 @@ export const rankingSlice = createSlice({
 
         // 古い記録を削除
         state.personalRecords = state.personalRecords.filter(
-          r => !(r.category === category && r.period === period)
+          r => !(r.category === category && r.period === period),
         );
 
         state.personalRecords.push(record);
@@ -212,7 +257,13 @@ export const rankingSlice = createSlice({
       state.error = action.payload;
     },
 
-    initializeRanking: (state, action: PayloadAction<{ records: PersonalRecord[]; metrics: { [key in RankingPeriod]: PerformanceMetrics | null } }>) => {
+    initializeRanking: (
+      state,
+      action: PayloadAction<{
+        records: PersonalRecord[];
+        metrics: { [key in RankingPeriod]: PerformanceMetrics | null };
+      }>,
+    ) => {
       const { records, metrics } = action.payload;
       state.personalRecords = records.sort((a, b) => b.achievedAt - a.achievedAt);
       state.currentMetrics = metrics;

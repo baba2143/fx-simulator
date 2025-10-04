@@ -23,7 +23,13 @@ interface CreateGoalModalProps {
 
 const { width, height } = Dimensions.get('window');
 
-const GOAL_TYPES: { type: GoalType; title: string; icon: string; color: string; description: string }[] = [
+const GOAL_TYPES: {
+  type: GoalType;
+  title: string;
+  icon: string;
+  color: string;
+  description: string;
+}[] = [
   {
     type: 'daily',
     title: '日次目標',
@@ -120,18 +126,11 @@ export const CreateGoalModal: React.FC<CreateGoalModalProps> = ({
   };
 
   return (
-    <Modal
-      visible={visible}
-      animationType="slide"
-      transparent
-      onRequestClose={handleClose}
-    >
+    <Modal visible={visible} animationType="slide" transparent onRequestClose={handleClose}>
       <View style={styles.overlay}>
         <View style={styles.modal}>
           <View style={styles.header}>
-            <Text style={styles.title}>
-              {editingGoal ? '目標を編集' : '新しい目標を作成'}
-            </Text>
+            <Text style={styles.title}>{editingGoal ? '目標を編集' : '新しい目標を作成'}</Text>
             <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
               <Icon name="close" size={24} color="#FFF" />
             </TouchableOpacity>
@@ -141,7 +140,7 @@ export const CreateGoalModal: React.FC<CreateGoalModalProps> = ({
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>目標期間</Text>
               <View style={styles.typeOptions}>
-                {GOAL_TYPES.map((type) => (
+                {GOAL_TYPES.map(type => (
                   <TouchableOpacity
                     key={type.type}
                     style={[
@@ -151,8 +150,7 @@ export const CreateGoalModal: React.FC<CreateGoalModalProps> = ({
                         backgroundColor: `${type.color}20`,
                       },
                     ]}
-                    onPress={() => setSelectedType(type.type)}
-                  >
+                    onPress={() => setSelectedType(type.type)}>
                     <Icon
                       name={type.icon}
                       size={24}
@@ -162,8 +160,7 @@ export const CreateGoalModal: React.FC<CreateGoalModalProps> = ({
                       style={[
                         styles.typeTitle,
                         selectedType === type.type && { color: type.color },
-                      ]}
-                    >
+                      ]}>
                       {type.title}
                     </Text>
                     <Text style={styles.typeDescription}>{type.description}</Text>
@@ -188,21 +185,19 @@ export const CreateGoalModal: React.FC<CreateGoalModalProps> = ({
 
               <Text style={styles.presetTitle}>プリセット金額</Text>
               <View style={styles.presetAmounts}>
-                {PRESET_AMOUNTS.map((amount) => (
+                {PRESET_AMOUNTS.map(amount => (
                   <TouchableOpacity
                     key={amount}
                     style={[
                       styles.presetButton,
                       targetAmount === amount.toString() && styles.presetButtonSelected,
                     ]}
-                    onPress={() => handlePresetAmount(amount)}
-                  >
+                    onPress={() => handlePresetAmount(amount)}>
                     <Text
                       style={[
                         styles.presetButtonText,
                         targetAmount === amount.toString() && styles.presetButtonTextSelected,
-                      ]}
-                    >
+                      ]}>
                       {formatCurrency(amount)}
                     </Text>
                   </TouchableOpacity>
@@ -252,9 +247,7 @@ export const CreateGoalModal: React.FC<CreateGoalModalProps> = ({
               <Text style={styles.cancelButtonText}>キャンセル</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.saveButtonText}>
-                {editingGoal ? '更新' : '作成'}
-              </Text>
+              <Text style={styles.saveButtonText}>{editingGoal ? '更新' : '作成'}</Text>
             </TouchableOpacity>
           </View>
         </View>

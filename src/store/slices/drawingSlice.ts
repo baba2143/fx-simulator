@@ -119,10 +119,7 @@ export const drawingSlice = createSlice({
     selectDrawing: (state, action: PayloadAction<string | null>) => {
       state.selectedDrawingId = action.payload;
     },
-    updateDrawing: (
-      state,
-      action: PayloadAction<{ id: string; updates: Partial<Drawing> }>,
-    ) => {
+    updateDrawing: (state, action: PayloadAction<{ id: string; updates: Partial<Drawing> }>) => {
       const { id, updates } = action.payload;
       const drawingIndex = state.drawings.findIndex(d => d.id === id);
       if (drawingIndex !== -1) {

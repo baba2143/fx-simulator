@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { PersonalRecord, RankingCategory } from '../../store/slices/rankingSlice';
 import { formatCurrency, formatPercentage, formatDate } from '../../utils/formatters';
@@ -18,7 +12,14 @@ interface PersonalRecordCardProps {
 
 const { width } = Dimensions.get('window');
 
-const CATEGORY_CONFIG: { [key in RankingCategory]: { icon: string; title: string; color: string; format: (value: number) => string } } = {
+const CATEGORY_CONFIG: {
+  [key in RankingCategory]: {
+    icon: string;
+    title: string;
+    color: string;
+    format: (value: number) => string;
+  };
+} = {
   profit: {
     icon: 'trending-up',
     title: '利益',
@@ -74,22 +75,15 @@ export const PersonalRecordCard: React.FC<PersonalRecordCardProps> = ({
 
   return (
     <TouchableOpacity
-      style={[
-        styles.card,
-        { borderLeftColor: config.color },
-        isLatest && styles.latestCard,
-      ]}
+      style={[styles.card, { borderLeftColor: config.color }, isLatest && styles.latestCard]}
       onPress={handlePress}
-      activeOpacity={0.7}
-    >
+      activeOpacity={0.7}>
       <View style={styles.header}>
         <View style={styles.categorySection}>
           <Icon name={config.icon} size={24} color={config.color} />
           <View style={styles.categoryInfo}>
             <Text style={styles.categoryTitle}>{config.title}</Text>
-            <Text style={styles.periodLabel}>
-              {PERIOD_LABELS[record.period]}
-            </Text>
+            <Text style={styles.periodLabel}>{PERIOD_LABELS[record.period]}</Text>
           </View>
         </View>
 
@@ -103,9 +97,7 @@ export const PersonalRecordCard: React.FC<PersonalRecordCardProps> = ({
 
       <View style={styles.content}>
         <View style={styles.valueSection}>
-          <Text style={[styles.value, { color: config.color }]}>
-            {config.format(record.value)}
-          </Text>
+          <Text style={[styles.value, { color: config.color }]}>{config.format(record.value)}</Text>
           {record.improvement !== undefined && record.improvement > 0 && (
             <View style={styles.improvementSection}>
               <Icon name="trending-up" size={16} color="#4CAF50" />
@@ -119,13 +111,9 @@ export const PersonalRecordCard: React.FC<PersonalRecordCardProps> = ({
         <Text style={styles.description}>{record.description}</Text>
 
         <View style={styles.footer}>
-          <Text style={styles.date}>
-            {formatDate(record.achievedAt)}
-          </Text>
+          <Text style={styles.date}>{formatDate(record.achievedAt)}</Text>
           {record.previousBest !== undefined && record.previousBest > 0 && (
-            <Text style={styles.previousBest}>
-              前回: {config.format(record.previousBest)}
-            </Text>
+            <Text style={styles.previousBest}>前回: {config.format(record.previousBest)}</Text>
           )}
         </View>
 
@@ -134,17 +122,13 @@ export const PersonalRecordCard: React.FC<PersonalRecordCardProps> = ({
             {record.metadata.tradesCount && (
               <View style={styles.metadataItem}>
                 <Icon name="chart-bar" size={12} color="#B0B0B0" />
-                <Text style={styles.metadataText}>
-                  {record.metadata.tradesCount}取引
-                </Text>
+                <Text style={styles.metadataText}>{record.metadata.tradesCount}取引</Text>
               </View>
             )}
             {record.metadata.currencyPair && (
               <View style={styles.metadataItem}>
                 <Icon name="currency-usd" size={12} color="#B0B0B0" />
-                <Text style={styles.metadataText}>
-                  {record.metadata.currencyPair}
-                </Text>
+                <Text style={styles.metadataText}>{record.metadata.currencyPair}</Text>
               </View>
             )}
           </View>

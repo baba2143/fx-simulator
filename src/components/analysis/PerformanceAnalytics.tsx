@@ -126,12 +126,13 @@ export const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({
     });
 
     // 平均取引時間の計算（時間単位）
-    const avgTradeDuration = closedTrades.reduce((sum, trade) => {
-      if (trade.closeDate) {
-        return sum + (trade.closeDate - trade.openDate) / (1000 * 60 * 60); // ミリ秒を時間に変換
-      }
-      return sum;
-    }, 0) / closedTrades.length;
+    const avgTradeDuration =
+      closedTrades.reduce((sum, trade) => {
+        if (trade.closeDate) {
+          return sum + (trade.closeDate - trade.openDate) / (1000 * 60 * 60); // ミリ秒を時間に変換
+        }
+        return sum;
+      }, 0) / closedTrades.length;
 
     return {
       totalTrades: closedTrades.length,
@@ -162,44 +163,56 @@ export const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({
     });
 
     return {
-      dataSets: [{
-        values,
-        label: 'Balance',
-        config: {
-          color: statistics.totalProfit >= 0 ? '#4ECDC4' : '#FF6B6B',
-          lineWidth: 3,
-          drawCircles: false,
-          drawValues: false,
-          mode: 'LINEAR',
-          fillColor: statistics.totalProfit >= 0 ? '#4ECDC4' : '#FF6B6B',
-          fillAlpha: 30,
-          drawFilled: true,
+      dataSets: [
+        {
+          values,
+          label: 'Balance',
+          config: {
+            color: statistics.totalProfit >= 0 ? '#4ECDC4' : '#FF6B6B',
+            lineWidth: 3,
+            drawCircles: false,
+            drawValues: false,
+            mode: 'LINEAR',
+            fillColor: statistics.totalProfit >= 0 ? '#4ECDC4' : '#FF6B6B',
+            fillAlpha: 30,
+            drawFilled: true,
+          },
         },
-      }],
+      ],
     };
   }, [trades, initialBalance, statistics.totalProfit]);
 
   const winLossPieData = useMemo(() => {
-    if (statistics.totalTrades === 0) return { dataSets: [] };
+    if (statistics.totalTrades === 0) {
+      return { dataSets: [] };
+    }
 
     return {
-      dataSets: [{
-        values: [
-          { value: statistics.winningTrades, label: '勝ち' },
-          { value: statistics.losingTrades, label: '負け' },
-        ],
-        label: '勝敗',
-        config: {
-          colors: ['#4ECDC4', '#FF6B6B'],
-          valueTextSize: 14,
-          valueTextColor: '#FFFFFF',
-          sliceSpace: 3,
+      dataSets: [
+        {
+          values: [
+            { value: statistics.winningTrades, label: '勝ち' },
+            { value: statistics.losingTrades, label: '負け' },
+          ],
+          label: '勝敗',
+          config: {
+            colors: ['#4ECDC4', '#FF6B6B'],
+            valueTextSize: 14,
+            valueTextColor: '#FFFFFF',
+            sliceSpace: 3,
+          },
         },
-      }],
+      ],
     };
   }, [statistics]);
 
-  const StatItem = ({ label, value, isPercentage = false, isCurrency = false, color }: {
+  const StatItem = ({
+    label,
+    value,
+    isPercentage = false,
+    isCurrency = false,
+    color,
+  }: {
     label: string;
     value: number;
     isPercentage?: boolean;
@@ -220,10 +233,7 @@ export const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>概要</Text>
         <View style={styles.overviewGrid}>
-          <StatItem
-            label="総取引数"
-            value={statistics.totalTrades}
-          />
+          <StatItem label="総取引数" value={statistics.totalTrades} />
           <StatItem
             label="勝率"
             value={statistics.winRate}
@@ -305,32 +315,36 @@ export const PerformanceAnalytics: React.FC<PerformanceAnalyticsProps> = ({
           <StatItem
             label="プロフィットファクター"
             value={statistics.profitFactor}
-            color={statistics.profitFactor >= 1.5 ? '#4ECDC4' : statistics.profitFactor >= 1 ? '#FFEAA7' : '#FF6B6B'}
+            color={
+              statistics.profitFactor >= 1.5
+                ? '#4ECDC4'
+                : statistics.profitFactor >= 1
+                ? '#FFEAA7'
+                : '#FF6B6B'
+            }
           />
           <StatItem
             label="最大ドローダウン"
             value={statistics.maxDrawdown}
             isPercentage
-            color={statistics.maxDrawdown <= 10 ? '#4ECDC4' : statistics.maxDrawdown <= 20 ? '#FFEAA7' : '#FF6B6B'}
+            color={
+              statistics.maxDrawdown <= 10
+                ? '#4ECDC4'
+                : statistics.maxDrawdown <= 20
+                ? '#FFEAA7'
+                : '#FF6B6B'
+            }
           />
           <StatItem label="最大連勝" value={statistics.consecutiveWins} />
           <StatItem label="最大連敗" value={statistics.consecutiveLosses} />
-          <StatItem
-            label="最大利益"
-            value={statistics.bestTrade}
-            isCurrency
-            color="#4ECDC4"
-          />
+          <StatItem label="最大利益" value={statistics.bestTrade} isCurrency color="#4ECDC4" />
           <StatItem
             label="最大損失"
             value={Math.abs(statistics.worstTrade)}
             isCurrency
             color="#FF6B6B"
           />
-          <StatItem
-            label="平均取引時間"
-            value={Math.round(statistics.avgTradeDuration)}
-          />
+          <StatItem label="平均取引時間" value={Math.round(statistics.avgTradeDuration)} />
           <StatItem
             label="平均損益"
             value={statistics.averageProfit}

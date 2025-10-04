@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C80B921A6F3F58F76C31292 /* libPods-FXSimulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-FXSimulator.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		4F28AE722E90108B00774E7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F28AE712E90108B00774E7F /* main.m */; };
+		4F28AE7A2E901E6000774E7F /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 4F28AE792E901E6000774E7F /* main.jsbundle */; };
+		761780EE2CA45674006654EE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 761780EB2CA45674006654EE /* AppDelegate.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		DC251D732AE6DD0DB381E107 /* libPods-FXSimulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0B2B52FB92D98955921E1C /* libPods-FXSimulator.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,11 +20,19 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FXSimulator/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FXSimulator/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = FXSimulator/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-FXSimulator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FXSimulator.debug.xcconfig"; path = "Target Support Files/Pods-FXSimulator/Pods-FXSimulator.debug.xcconfig"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-FXSimulator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FXSimulator.release.xcconfig"; path = "Target Support Files/Pods-FXSimulator/Pods-FXSimulator.release.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-FXSimulator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FXSimulator.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = FXSimulator/AppDelegate.swift; sourceTree = "<group>"; };
+		4F28AE6D2E90068C00774E7F /* RCTBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTBridge.h; sourceTree = "<group>"; };
+		4F28AE6E2E90068C00774E7F /* RCTBridgeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTBridgeDelegate.h; sourceTree = "<group>"; };
+		4F28AE6F2E90068C00774E7F /* RCTBundleURLProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTBundleURLProvider.h; sourceTree = "<group>"; };
+		4F28AE702E90068C00774E7F /* RCTRootView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTRootView.h; sourceTree = "<group>"; };
+		4F28AE712E90108B00774E7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4F28AE792E901E6000774E7F /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		4F28AE7B2E912E7300774E7F /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ionicons.ttf; sourceTree = "<group>"; };
+		761780EA2CA45674006654EE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = FXSimulator/AppDelegate.h; sourceTree = "<group>"; };
+		761780EB2CA45674006654EE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = FXSimulator/AppDelegate.m; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FXSimulator/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A9F5E993429A3E44C9208821 /* Pods-FXSimulator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FXSimulator.debug.xcconfig"; path = "Target Support Files/Pods-FXSimulator/Pods-FXSimulator.debug.xcconfig"; sourceTree = "<group>"; };
+		E32E18473E745DDB40BA5991 /* Pods-FXSimulator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FXSimulator.release.xcconfig"; path = "Target Support Files/Pods-FXSimulator/Pods-FXSimulator.release.xcconfig"; sourceTree = "<group>"; };
+		EB0B2B52FB92D98955921E1C /* libPods-FXSimulator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FXSimulator.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -31,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-FXSimulator.a in Frameworks */,
+				DC251D732AE6DD0DB381E107 /* libPods-FXSimulator.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,8 +51,15 @@
 		13B07FAE1A68108700A75B9A /* FXSimulator */ = {
 			isa = PBXGroup;
 			children = (
+				4F28AE792E901E6000774E7F /* main.jsbundle */,
+				4F28AE712E90108B00774E7F /* main.m */,
+				4F28AE6D2E90068C00774E7F /* RCTBridge.h */,
+				4F28AE6E2E90068C00774E7F /* RCTBridgeDelegate.h */,
+				4F28AE6F2E90068C00774E7F /* RCTBundleURLProvider.h */,
+				4F28AE702E90068C00774E7F /* RCTRootView.h */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				761780EC2CA45674006654EE /* AppDelegate.swift */,
+				761780EA2CA45674006654EE /* AppDelegate.h */,
+				761780EB2CA45674006654EE /* AppDelegate.m */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
@@ -54,7 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-FXSimulator.a */,
+				EB0B2B52FB92D98955921E1C /* libPods-FXSimulator.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -69,6 +86,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				4F28AE7B2E912E7300774E7F /* Ionicons.ttf */,
 				13B07FAE1A68108700A75B9A /* FXSimulator */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -91,8 +109,8 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-FXSimulator.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-FXSimulator.release.xcconfig */,
+				A9F5E993429A3E44C9208821 /* Pods-FXSimulator.debug.xcconfig */,
+				E32E18473E745DDB40BA5991 /* Pods-FXSimulator.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -104,12 +122,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FXSimulator" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				3D7EE400D85CE0872633BA68 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				E01E6141E204151FF0D43E1B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -156,6 +174,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F28AE7A2E901E6000774E7F /* main.jsbundle in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -180,7 +199,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		3D7EE400D85CE0872633BA68 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -202,7 +221,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
+		E01E6141E204151FF0D43E1B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -226,7 +245,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				761780ED2CA45674006654EE /* AppDelegate.swift in Sources */,
+				4F28AE722E90108B00774E7F /* main.m in Sources */,
+				761780EE2CA45674006654EE /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,11 +255,13 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-FXSimulator.debug.xcconfig */;
+			baseConfigurationReference = A9F5E993429A3E44C9208821 /* Pods-FXSimulator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = ZCXGYTWCLQ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = FXSimulator/Info.plist;
@@ -256,6 +278,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.makotobaba.fxsimulator;
 				PRODUCT_NAME = FXSimulator;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -269,11 +292,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-FXSimulator.release.xcconfig */;
+			baseConfigurationReference = E32E18473E745DDB40BA5991 /* Pods-FXSimulator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = ZCXGYTWCLQ;
 				INFOPLIST_FILE = FXSimulator/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
@@ -289,6 +314,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.makotobaba.fxsimulator;
 				PRODUCT_NAME = FXSimulator;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

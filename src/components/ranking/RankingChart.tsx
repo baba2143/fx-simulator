@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LineChart } from 'react-native-charts-wrapper';
 import { PerformanceMetrics, RankingPeriod } from '../../store/slices/rankingSlice';
@@ -98,14 +91,12 @@ export const RankingChart: React.FC<RankingChartProps> = ({
                       backgroundColor: PERIOD_COLORS[period as RankingPeriod],
                     },
                   ]}
-                  onPress={() => onPeriodChange(period as RankingPeriod)}
-                >
+                  onPress={() => onPeriodChange(period as RankingPeriod)}>
                   <Text
                     style={[
                       styles.periodButtonText,
                       selectedPeriod === period && styles.selectedPeriodText,
-                    ]}
-                  >
+                    ]}>
                     {label}
                   </Text>
                 </TouchableOpacity>
@@ -154,33 +145,25 @@ export const RankingChart: React.FC<RankingChartProps> = ({
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
             <Icon name="trending-up" size={20} color="#4CAF50" />
-            <Text style={styles.statValue}>
-              {formatCurrency(selectedMetrics.totalProfit)}
-            </Text>
+            <Text style={styles.statValue}>{formatCurrency(selectedMetrics.totalProfit)}</Text>
             <Text style={styles.statLabel}>累積利益</Text>
           </View>
 
           <View style={styles.statCard}>
             <Icon name="target" size={20} color="#2196F3" />
-            <Text style={styles.statValue}>
-              {formatPercentage(selectedMetrics.winRate)}
-            </Text>
+            <Text style={styles.statValue}>{formatPercentage(selectedMetrics.winRate)}</Text>
             <Text style={styles.statLabel}>勝率</Text>
           </View>
 
           <View style={styles.statCard}>
             <Icon name="calculator-variant" size={20} color="#FF9800" />
-            <Text style={styles.statValue}>
-              {selectedMetrics.profitFactor.toFixed(2)}
-            </Text>
+            <Text style={styles.statValue}>{selectedMetrics.profitFactor.toFixed(2)}</Text>
             <Text style={styles.statLabel}>PF</Text>
           </View>
 
           <View style={styles.statCard}>
             <Icon name="chart-line-variant" size={20} color="#9C27B0" />
-            <Text style={styles.statValue}>
-              {selectedMetrics.consistencyScore.toFixed(1)}
-            </Text>
+            <Text style={styles.statValue}>{selectedMetrics.consistencyScore.toFixed(1)}</Text>
             <Text style={styles.statLabel}>一貫性</Text>
           </View>
         </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, processColor } from 'react-native';
 import { LineChart } from 'react-native-charts-wrapper';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
@@ -97,7 +97,7 @@ export const RSIChart: React.FC<RSIChartProps> = ({ height = 100 }) => {
     xAxis: {
       enabled: true,
       drawGridLines: false,
-      textColor: '#8E8E93',
+      textColor: processColor('#8E8E93'),
       position: 'BOTTOM',
     },
 
@@ -105,8 +105,8 @@ export const RSIChart: React.FC<RSIChartProps> = ({ height = 100 }) => {
       left: {
         enabled: true,
         drawGridLines: true,
-        gridColor: '#333333',
-        textColor: '#8E8E93',
+        gridColor: processColor('#333333'),
+        textColor: processColor('#8E8E93'),
         axisMinimum: 0,
         axisMaximum: 100,
         granularity: 10,
@@ -119,7 +119,7 @@ export const RSIChart: React.FC<RSIChartProps> = ({ height = 100 }) => {
 
     legend: {
       enabled: true,
-      textColor: '#FFFFFF',
+      textColor: processColor('#FFFFFF'),
       position: 'BELOW_CHART_LEFT',
     },
 

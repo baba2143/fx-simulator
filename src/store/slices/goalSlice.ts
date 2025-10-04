@@ -79,7 +79,10 @@ export const goalSlice = createSlice({
   name: 'goals',
   initialState,
   reducers: {
-    createGoal: (state, action: PayloadAction<Omit<Goal, 'id' | 'createdAt' | 'currentAmount'>>) => {
+    createGoal: (
+      state,
+      action: PayloadAction<Omit<Goal, 'id' | 'createdAt' | 'currentAmount'>>,
+    ) => {
       const goal: Goal = {
         ...action.payload,
         id: `goal_${Date.now()}`,
@@ -92,7 +95,15 @@ export const goalSlice = createSlice({
       state.statistics.totalGoalsCreated += 1;
     },
 
-    updateGoalProgress: (state, action: PayloadAction<{ goalId: string; profit: number; tradesCount: number; winRate: number }>) => {
+    updateGoalProgress: (
+      state,
+      action: PayloadAction<{
+        goalId: string;
+        profit: number;
+        tradesCount: number;
+        winRate: number;
+      }>,
+    ) => {
       const { goalId, profit, tradesCount, winRate } = action.payload;
       const goal = state.goals.find(g => g.id === goalId);
 
@@ -101,7 +112,9 @@ export const goalSlice = createSlice({
 
         // 進捗記録を追加
         const today = new Date().setHours(0, 0, 0, 0);
-        const existingProgress = state.goalProgress.find(p => p.goalId === goalId && p.date === today);
+        const existingProgress = state.goalProgress.find(
+          p => p.goalId === goalId && p.date === today,
+        );
 
         if (existingProgress) {
           existingProgress.dailyProfit = profit;
@@ -145,9 +158,12 @@ export const goalSlice = createSlice({
         }
 
         // 成功率を計算
-        const completedGoals = state.goals.filter(g => g.status === 'completed' || g.status === 'failed').length;
+        const completedGoals = state.goals.filter(
+          g => g.status === 'completed' || g.status === 'failed',
+        ).length;
         if (completedGoals > 0) {
-          state.statistics.goalsSuccessRate = (state.statistics.goalsCompleted / completedGoals) * 100;
+          state.statistics.goalsSuccessRate =
+            (state.statistics.goalsCompleted / completedGoals) * 100;
         }
       }
     },
@@ -197,15 +213,18 @@ export const goalSlice = createSlice({
       }
     },
 
-    updateNotificationSettings: (state, action: PayloadAction<Partial<GoalState['notifications']>>) => {
+    updateNotificationSettings: (
+      state,
+      action: PayloadAction<Partial<GoalState['notifications']>>,
+    ) => {
       state.notifications = { ...state.notifications, ...action.payload };
     },
 
-    resetStreak: (state) => {
+    resetStreak: state => {
       state.statistics.currentStreak = 0;
     },
 
-    clearGoalHistory: (state) => {
+    clearGoalHistory: state => {
       state.goals = state.goals.filter(g => g.status === 'active' || g.status === 'paused');
       state.goalProgress = [];
     },
@@ -218,7 +237,10 @@ export const goalSlice = createSlice({
       state.error = action.payload;
     },
 
-    initializeGoals: (state, action: PayloadAction<{ goals: Goal[]; progress: GoalProgress[] }>) => {
+    initializeGoals: (
+      state,
+      action: PayloadAction<{ goals: Goal[]; progress: GoalProgress[] }>,
+    ) => {
       const { goals, progress } = action.payload;
       state.goals = goals;
       state.goalProgress = progress;

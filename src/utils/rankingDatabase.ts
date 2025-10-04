@@ -1,5 +1,10 @@
 import { DatabaseInit } from '../services/database/DatabaseInit';
-import { PersonalRecord, PerformanceMetrics, RankingPeriod, RankingCategory } from '../store/slices/rankingSlice';
+import {
+  PersonalRecord,
+  PerformanceMetrics,
+  RankingPeriod,
+  RankingCategory,
+} from '../store/slices/rankingSlice';
 
 interface PersonalRecordRow {
   id: string;
@@ -101,7 +106,7 @@ export class RankingDatabase {
           record.previousBest || null,
           record.improvement || null,
           record.metadata ? JSON.stringify(record.metadata) : null,
-        ]
+        ],
       );
 
       console.log('Personal record saved successfully:', record.id);
@@ -115,7 +120,7 @@ export class RankingDatabase {
     try {
       const db = await DatabaseInit.getDatabase();
       const [results] = await db.executeSql(
-        'SELECT * FROM personal_records ORDER BY achieved_at DESC'
+        'SELECT * FROM personal_records ORDER BY achieved_at DESC',
       );
 
       const records: PersonalRecord[] = [];
@@ -162,7 +167,7 @@ export class RankingDatabase {
           metrics.averageRiskReward,
           metrics.tradesCount,
           metrics.calculatedAt,
-        ]
+        ],
       );
 
       console.log('Performance metrics saved successfully for period:', metrics.period);
@@ -172,11 +177,13 @@ export class RankingDatabase {
     }
   }
 
-  static async loadPerformanceMetrics(): Promise<{ [key in RankingPeriod]: PerformanceMetrics | null }> {
+  static async loadPerformanceMetrics(): Promise<{
+    [key in RankingPeriod]: PerformanceMetrics | null;
+  }> {
     try {
       const db = await DatabaseInit.getDatabase();
       const [results] = await db.executeSql(
-        'SELECT * FROM performance_metrics ORDER BY calculated_at DESC'
+        'SELECT * FROM performance_metrics ORDER BY calculated_at DESC',
       );
 
       const metricsMap: { [key in RankingPeriod]: PerformanceMetrics | null } = {
@@ -215,7 +222,7 @@ export class RankingDatabase {
       const db = await DatabaseInit.getDatabase();
       const [results] = await db.executeSql(
         'SELECT * FROM personal_records WHERE category = ? ORDER BY achieved_at DESC',
-        [category]
+        [category],
       );
 
       const records: PersonalRecord[] = [];
@@ -246,7 +253,7 @@ export class RankingDatabase {
       const db = await DatabaseInit.getDatabase();
       const [results] = await db.executeSql(
         'SELECT * FROM personal_records WHERE period = ? ORDER BY achieved_at DESC',
-        [period]
+        [period],
       );
 
       const records: PersonalRecord[] = [];
@@ -272,12 +279,15 @@ export class RankingDatabase {
     }
   }
 
-  static async getBestRecordForCategory(category: RankingCategory, period: RankingPeriod): Promise<PersonalRecord | null> {
+  static async getBestRecordForCategory(
+    category: RankingCategory,
+    period: RankingPeriod,
+  ): Promise<PersonalRecord | null> {
     try {
       const db = await DatabaseInit.getDatabase();
       const [results] = await db.executeSql(
         'SELECT * FROM personal_records WHERE category = ? AND period = ? ORDER BY value DESC LIMIT 1',
-        [category, period]
+        [category, period],
       );
 
       if (results.rows.length > 0) {
@@ -318,12 +328,9 @@ export class RankingDatabase {
   static async clearOldMetrics(daysToKeep: number = 30): Promise<void> {
     try {
       const db = await DatabaseInit.getDatabase();
-      const cutoffTime = Date.now() - (daysToKeep * 24 * 60 * 60 * 1000);
+      const cutoffTime = Date.now() - daysToKeep * 24 * 60 * 60 * 1000;
 
-      await db.executeSql(
-        'DELETE FROM performance_metrics WHERE calculated_at < ?',
-        [cutoffTime]
-      );
+      await db.executeSql('DELETE FROM performance_metrics WHERE calculated_at < ?', [cutoffTime]);
 
       console.log('Old performance metrics cleared');
     } catch (error) {
@@ -351,7 +358,7 @@ export class RankingDatabase {
       thisMonth.setHours(0, 0, 0, 0);
       const [monthResults] = await db.executeSql(
         'SELECT COUNT(*) as total FROM personal_records WHERE achieved_at >= ?',
-        [thisMonth.getTime()]
+        [thisMonth.getTime()],
       );
       const recordsThisMonth = monthResults.rows.item(0).total;
 
@@ -363,7 +370,8 @@ export class RankingDatabase {
         ORDER BY count DESC
         LIMIT 1
       `);
-      const bestCategory = categoryResults.rows.length > 0 ? categoryResults.rows.item(0).category : null;
+      const bestCategory =
+        categoryResults.rows.length > 0 ? categoryResults.rows.item(0).category : null;
 
       // Most active month
       const [monthlyResults] = await db.executeSql(`
@@ -374,7 +382,8 @@ export class RankingDatabase {
         ORDER BY count DESC
         LIMIT 1
       `);
-      const mostActiveMonth = monthlyResults.rows.length > 0 ? monthlyResults.rows.item(0).month : null;
+      const mostActiveMonth =
+        monthlyResults.rows.length > 0 ? monthlyResults.rows.item(0).month : null;
 
       return {
         totalRecords,

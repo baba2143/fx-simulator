@@ -41,8 +41,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
           backgroundColor,
           borderRadius,
         },
-      ]}
-    >
+      ]}>
       <Animated.View
         style={[
           styles.progress,

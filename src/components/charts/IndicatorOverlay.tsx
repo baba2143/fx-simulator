@@ -83,11 +83,7 @@ export const IndicatorOverlay: React.FC<IndicatorOverlayProps> = ({ height }) =>
 
   return (
     <View style={[styles.container, { height }]}>
-      <LineChart
-        style={styles.chart}
-        data={{ dataSets }}
-        {...chartConfig}
-      />
+      <LineChart style={styles.chart} data={{ dataSets }} {...chartConfig} />
     </View>
   );
 };

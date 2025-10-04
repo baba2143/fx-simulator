@@ -19,7 +19,7 @@ const CONFIG = {
     { symbol: 'GBPJPY', basePrice: 152.0, volatility: 0.7 },
     { symbol: 'AUDJPY', basePrice: 82.0, volatility: 0.4 },
     { symbol: 'XAUJPY', basePrice: 195000.0, volatility: 2000.0 }, // ゴールド/円 (1オンス)
-    { symbol: 'XAUUSD', basePrice: 1850.0, volatility: 15.0 },     // ゴールド/ドル (1オンス)
+    { symbol: 'XAUUSD', basePrice: 1850.0, volatility: 15.0 }, // ゴールド/ドル (1オンス)
   ],
 
   // 生成するデータの期間
@@ -34,7 +34,7 @@ const CONFIG = {
 };
 
 // ディレクトリ作成
-const ensureDirectoryExists = (dirPath) => {
+const ensureDirectoryExists = dirPath => {
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
     console.log(`📁 Created directory: ${dirPath}`);
@@ -46,7 +46,7 @@ const ensureDirectoryExists = (dirPath) => {
  */
 const generateRealisticPrice = (basePrice, volatility, dayIndex, totalDays) => {
   // 長期トレンド（緩やかな上昇または下降）
-  const trend = Math.sin(dayIndex * 2 * Math.PI / (totalDays / 2)) * volatility * 10;
+  const trend = Math.sin((dayIndex * 2 * Math.PI) / (totalDays / 2)) * volatility * 10;
 
   // 短期変動
   const shortTermVolatility = (Math.random() - 0.5) * volatility * 2;
@@ -81,7 +81,7 @@ const generateOHLC = (basePrice, volatility) => {
 /**
  * 通貨ペアのデータを生成
  */
-const generatePairData = (pair) => {
+const generatePairData = pair => {
   console.log(`💱 Generating data for ${pair.symbol}...`);
 
   const startDate = new Date(CONFIG.startDate);
@@ -111,7 +111,9 @@ const generatePairData = (pair) => {
     const dateStr = `${year}${month}${day}`;
 
     // CSVフォーマット
-    const csvLine = `${dateStr},${ohlc.open.toFixed(6)},${ohlc.high.toFixed(6)},${ohlc.low.toFixed(6)},${ohlc.close.toFixed(6)}`;
+    const csvLine = `${dateStr},${ohlc.open.toFixed(6)},${ohlc.high.toFixed(6)},${ohlc.low.toFixed(
+      6,
+    )},${ohlc.close.toFixed(6)}`;
     data.push(csvLine);
 
     // 次の日の始値は前日の終値
@@ -159,7 +161,10 @@ const main = () => {
   console.log(`  Period: ${CONFIG.startDate.toDateString()} - ${CONFIG.endDate.toDateString()}`);
   console.log(`  Currency Pairs: ${CONFIG.currencyPairs.length}`);
 
-  const samplePath = path.join(CONFIG.outputDir.android, `${CONFIG.currencyPairs[0].symbol}_daily.csv`);
+  const samplePath = path.join(
+    CONFIG.outputDir.android,
+    `${CONFIG.currencyPairs[0].symbol}_daily.csv`,
+  );
   const lines = fs.readFileSync(samplePath, 'utf8').split('\n').length - 1; // ヘッダーを除く
   console.log(`  Records per pair: ~${lines}`);
   console.log(`  Total records: ~${lines * CONFIG.currencyPairs.length}`);
@@ -169,7 +174,7 @@ const main = () => {
 };
 
 // エラーハンドリング
-process.on('unhandledRejection', (error) => {
+process.on('unhandledRejection', error => {
   console.error('❌ Unhandled error:', error);
   process.exit(1);
 });

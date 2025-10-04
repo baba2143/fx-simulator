@@ -100,7 +100,10 @@ export const indicatorSlice = createSlice({
         }
       });
     },
-    updateIndicator: (state, action: PayloadAction<{ id: string; config: Partial<IndicatorConfig> }>) => {
+    updateIndicator: (
+      state,
+      action: PayloadAction<{ id: string; config: Partial<IndicatorConfig> }>,
+    ) => {
       const { id, config } = action.payload;
       const indicator = state.activeIndicators.find(ind => ind.id === id);
       if (indicator) {
@@ -125,7 +128,10 @@ export const indicatorSlice = createSlice({
     setMACDData: (state, action: PayloadAction<{ id: string; data: MACDValue[] }>) => {
       state.data.macd[action.payload.id] = action.payload.data;
     },
-    setBollingerData: (state, action: PayloadAction<{ id: string; data: BollingerBandValue[] }>) => {
+    setBollingerData: (
+      state,
+      action: PayloadAction<{ id: string; data: BollingerBandValue[] }>,
+    ) => {
       state.data.bollinger[action.payload.id] = action.payload.data;
     },
     setStochasticData: (state, action: PayloadAction<{ id: string; data: StochasticValue[] }>) => {

@@ -91,16 +91,16 @@ export const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ visible, onClose
             <TouchableOpacity
               key={width}
               style={[styles.lineWidthOption, currentLineWidth === width && styles.selectedOption]}
-              onPress={() => handleLineWidthSelect(width)}
-            >
-              <View style={[styles.linePreview, { height: width * 2, backgroundColor: currentColor }]} />
+              onPress={() => handleLineWidthSelect(width)}>
+              <View
+                style={[styles.linePreview, { height: width * 2, backgroundColor: currentColor }]}
+              />
               <Text style={styles.lineWidthText}>{width}px</Text>
             </TouchableOpacity>
           ))}
           <TouchableOpacity
             style={styles.pickerCancel}
-            onPress={() => setShowLineWidthPicker(false)}
-          >
+            onPress={() => setShowLineWidthPicker(false)}>
             <Text style={styles.pickerCancelText}>キャンセル</Text>
           </TouchableOpacity>
         </View>
@@ -126,8 +126,7 @@ export const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ visible, onClose
                 <TouchableOpacity
                   key={tool}
                   style={[styles.toolButton, activeTool === tool && styles.selectedTool]}
-                  onPress={() => handleToolSelect(tool)}
-                >
+                  onPress={() => handleToolSelect(tool)}>
                   <Text style={styles.toolIcon}>{icon}</Text>
                   <Text style={styles.toolLabel}>{label}</Text>
                 </TouchableOpacity>
@@ -136,18 +135,14 @@ export const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ visible, onClose
 
             <Text style={styles.sectionTitle}>スタイル</Text>
             <View style={styles.styleControls}>
-              <TouchableOpacity
-                style={styles.colorButton}
-                onPress={() => setShowColorPicker(true)}
-              >
+              <TouchableOpacity style={styles.colorButton} onPress={() => setShowColorPicker(true)}>
                 <View style={[styles.colorPreview, { backgroundColor: currentColor }]} />
                 <Text style={styles.controlLabel}>色</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.lineWidthButton}
-                onPress={() => setShowLineWidthPicker(true)}
-              >
+                onPress={() => setShowLineWidthPicker(true)}>
                 <View
                   style={[
                     styles.lineWidthPreview,
@@ -169,9 +164,9 @@ export const DrawingToolbar: React.FC<DrawingToolbarProps> = ({ visible, onClose
               <TouchableOpacity
                 style={[styles.actionButton, styles.dangerButton]}
                 onPress={handleClearAll}
-                disabled={drawings.length === 0}
-              >
-                <Text style={[styles.actionButtonText, { opacity: drawings.length === 0 ? 0.5 : 1 }]}>
+                disabled={drawings.length === 0}>
+                <Text
+                  style={[styles.actionButtonText, { opacity: drawings.length === 0 ? 0.5 : 1 }]}>
                   すべて削除
                 </Text>
               </TouchableOpacity>

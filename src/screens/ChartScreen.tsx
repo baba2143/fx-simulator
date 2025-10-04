@@ -4,11 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
 import { fetchPriceData, setCurrentPair } from '../store/slices/priceSlice';
 import { setSelectedPair, setChartData } from '../store/slices/chartSlice';
-import {
-  setSMAData,
-  setEMAData,
-  setRSIData,
-} from '../store/slices/indicatorSlice';
+import { setSMAData, setEMAData, setRSIData } from '../store/slices/indicatorSlice';
 import { CurrencyPair } from '../types';
 import { getAllCurrencyPairs, getCurrencyPairDisplayName } from '../utils/currencyPairs';
 import { CandlestickChart } from '../components/charts/CandlestickChart';
@@ -79,11 +75,15 @@ export const ChartScreen: React.FC = () => {
   }, [priceData, dispatch]);
 
   const calculateIndicators = () => {
-    if (!priceData || priceData.length === 0) return;
+    if (!priceData || priceData.length === 0) {
+      return;
+    }
 
     // 各アクティブなインジケーターの計算
     activeIndicators.forEach(indicator => {
-      if (!indicator.visible) return;
+      if (!indicator.visible) {
+        return;
+      }
 
       try {
         switch (indicator.type) {
@@ -113,7 +113,9 @@ export const ChartScreen: React.FC = () => {
   };
 
   const analyzeMarket = () => {
-    if (!priceData || priceData.length < 20) return;
+    if (!priceData || priceData.length < 20) {
+      return;
+    }
 
     try {
       const condition = analyzeMarketCondition(priceData);
@@ -171,6 +173,23 @@ export const ChartScreen: React.FC = () => {
       );
     }
 
+    if (!chartData || chartData.length === 0) {
+      return (
+        <View style={styles.chartContainer}>
+          <View style={styles.noDataContainer}>
+            <Text style={styles.noDataTitle}>データがありません</Text>
+            <Text style={styles.noDataMessage}>
+              価格データをインポートすると、チャート分析機能を使用できます。
+            </Text>
+            <Text style={styles.noDataHint}>
+              現在はデモモードです。{'\n'}
+              設定画面からデータをインポートできます。
+            </Text>
+          </View>
+        </View>
+      );
+    }
+
     return (
       <View style={styles.chartContainer}>
         <View style={styles.chartHeader}>
@@ -184,17 +203,11 @@ export const ChartScreen: React.FC = () => {
 
   const renderToolbar = () => (
     <View style={styles.toolbar}>
-      <TouchableOpacity
-        style={styles.toolbarButton}
-        onPress={() => setShowIndicatorSettings(true)}
-      >
+      <TouchableOpacity style={styles.toolbarButton} onPress={() => setShowIndicatorSettings(true)}>
         <Text style={styles.toolbarButtonText}>📊 インジケーター</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.toolbarButton}
-        onPress={() => setShowDrawingTools(true)}
-      >
+      <TouchableOpacity style={styles.toolbarButton} onPress={() => setShowDrawingTools(true)}>
         <Text style={styles.toolbarButtonText}>✏️ 描画</Text>
       </TouchableOpacity>
 
@@ -209,13 +222,17 @@ export const ChartScreen: React.FC = () => {
   );
 
   const renderSignals = () => {
-    if (signals.length === 0) return null;
+    if (signals.length === 0) {
+      return null;
+    }
 
     return (
       <View style={styles.signalsContainer}>
         <Text style={styles.signalsTitle}>トレードシグナル</Text>
         {signals.map((signal, index) => (
-          <View key={index} style={[styles.signalItem, { borderLeftColor: getSignalColor(signal.type) }]}>
+          <View
+            key={index}
+            style={[styles.signalItem, { borderLeftColor: getSignalColor(signal.type) }]}>
             <Text style={[styles.signalType, { color: getSignalColor(signal.type) }]}>
               {signal.type.toUpperCase()}
             </Text>
@@ -229,25 +246,34 @@ export const ChartScreen: React.FC = () => {
 
   const getTrendColor = (trend: string) => {
     switch (trend) {
-      case 'bullish': return '#4ECDC4';
-      case 'bearish': return '#FF6B6B';
-      default: return '#8E8E93';
+      case 'bullish':
+        return '#4ECDC4';
+      case 'bearish':
+        return '#FF6B6B';
+      default:
+        return '#8E8E93';
     }
   };
 
   const getTrendLabel = (trend: string) => {
     switch (trend) {
-      case 'bullish': return '上昇トレンド';
-      case 'bearish': return '下降トレンド';
-      default: return '横ばい';
+      case 'bullish':
+        return '上昇トレンド';
+      case 'bearish':
+        return '下降トレンド';
+      default:
+        return '横ばい';
     }
   };
 
   const getSignalColor = (type: string) => {
     switch (type) {
-      case 'buy': return '#4ECDC4';
-      case 'sell': return '#FF6B6B';
-      default: return '#8E8E93';
+      case 'buy':
+        return '#4ECDC4';
+      case 'sell':
+        return '#FF6B6B';
+      default:
+        return '#8E8E93';
     }
   };
 
@@ -264,10 +290,7 @@ export const ChartScreen: React.FC = () => {
         visible={showIndicatorSettings}
         onClose={() => setShowIndicatorSettings(false)}
       />
-      <DrawingToolbar
-        visible={showDrawingTools}
-        onClose={() => setShowDrawingTools(false)}
-      />
+      <DrawingToolbar visible={showDrawingTools} onClose={() => setShowDrawingTools(false)} />
     </View>
   );
 };
@@ -391,5 +414,30 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#FF3B30',
     marginTop: 100,
+  },
+  noDataContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  noDataTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 16,
+  },
+  noDataMessage: {
+    fontSize: 16,
+    color: '#8E8E93',
+    textAlign: 'center',
+    marginBottom: 12,
+    lineHeight: 24,
+  },
+  noDataHint: {
+    fontSize: 14,
+    color: '#007AFF',
+    textAlign: 'center',
+    lineHeight: 20,
   },
 });

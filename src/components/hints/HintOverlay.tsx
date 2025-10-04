@@ -27,11 +27,7 @@ interface HintOverlayProps {
   onNavigate?: (screen: string, params?: any) => void;
 }
 
-export const HintOverlay: React.FC<HintOverlayProps> = ({
-  visible,
-  onClose,
-  onNavigate,
-}) => {
+export const HintOverlay: React.FC<HintOverlayProps> = ({ visible, onClose, onNavigate }) => {
   const dispatch = useDispatch();
   const { currentHint, settings } = useSelector((state: RootState) => state.hints);
   const [slideAnim] = React.useState(new Animated.Value(height));
@@ -118,26 +114,17 @@ export const HintOverlay: React.FC<HintOverlayProps> = ({
       visible={visible}
       transparent
       animationType="none"
-      onRequestClose={() => handleDismiss(currentHint.id)}
-    >
+      onRequestClose={() => handleDismiss(currentHint.id)}>
       <SafeAreaView style={styles.container}>
-        <TouchableOpacity
-          style={styles.backdrop}
-          activeOpacity={1}
-          onPress={handleBackdropPress}
-        >
+        <TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={handleBackdropPress}>
           <Animated.View
             style={[
               styles.hintContainer,
               {
                 transform: [{ translateY: slideAnim }],
               },
-            ]}
-          >
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={(e) => e.stopPropagation()}
-            >
+            ]}>
+            <TouchableOpacity activeOpacity={1} onPress={e => e.stopPropagation()}>
               <HintCard
                 hint={currentHint}
                 onAction={handleAction}

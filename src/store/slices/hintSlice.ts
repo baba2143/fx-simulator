@@ -88,7 +88,14 @@ const initialState: HintState = {
     enabled: true,
     autoShow: true,
     priority: ['critical', 'high', 'medium', 'low'],
-    types: ['trading_signal', 'risk_warning', 'market_insight', 'technique_tip', 'goal_progress', 'performance_improvement'],
+    types: [
+      'trading_signal',
+      'risk_warning',
+      'market_insight',
+      'technique_tip',
+      'goal_progress',
+      'performance_improvement',
+    ],
     frequency: 'moderate',
     showOnlyActionable: false,
   },
@@ -116,11 +123,15 @@ export const hintSlice = createSlice({
 
       // 重複チェック（同じタイプ・メッセージの場合は更新）
       const existingIndex = state.hints.findIndex(
-        h => h.type === hint.type && h.message === hint.message && !h.isRead
+        h => h.type === hint.type && h.message === hint.message && !h.isRead,
       );
 
       if (existingIndex !== -1) {
-        state.hints[existingIndex] = { ...state.hints[existingIndex], ...hint, id: state.hints[existingIndex].id };
+        state.hints[existingIndex] = {
+          ...state.hints[existingIndex],
+          ...hint,
+          id: state.hints[existingIndex].id,
+        };
       } else {
         state.hints.push(hint);
       }
@@ -162,7 +173,10 @@ export const hintSlice = createSlice({
       }
     },
 
-    markHintActionTaken: (state, action: PayloadAction<{ hintId: string; successful: boolean }>) => {
+    markHintActionTaken: (
+      state,
+      action: PayloadAction<{ hintId: string; successful: boolean }>,
+    ) => {
       const { hintId, successful } = action.payload;
       const hint = state.hints.find(h => h.id === hintId);
 
@@ -173,9 +187,11 @@ export const hintSlice = createSlice({
         }
 
         // 学習スコア更新
-        const successRate = state.learningProgress.hintsActedUpon > 0
-          ? (state.learningProgress.successfulActions / state.learningProgress.hintsActedUpon) * 100
-          : 0;
+        const successRate =
+          state.learningProgress.hintsActedUpon > 0
+            ? (state.learningProgress.successfulActions / state.learningProgress.hintsActedUpon) *
+              100
+            : 0;
         state.learningProgress.learningScore = successRate;
         state.learningProgress.lastLearningUpdate = Date.now();
 
@@ -188,7 +204,8 @@ export const hintSlice = createSlice({
           }
           state.learningProgress.preferredHintTypes.unshift(hint.type);
           // 最大5つまで保持
-          state.learningProgress.preferredHintTypes = state.learningProgress.preferredHintTypes.slice(0, 5);
+          state.learningProgress.preferredHintTypes =
+            state.learningProgress.preferredHintTypes.slice(0, 5);
         }
       }
     },
@@ -205,11 +222,12 @@ export const hintSlice = createSlice({
       }
     },
 
-    showNextHint: (state) => {
-      const nextHint = state.hints.find(h =>
-        !h.isRead &&
-        state.settings.types.includes(h.type) &&
-        state.settings.priority.includes(h.priority)
+    showNextHint: state => {
+      const nextHint = state.hints.find(
+        h =>
+          !h.isRead &&
+          state.settings.types.includes(h.type) &&
+          state.settings.priority.includes(h.priority),
       );
 
       if (nextHint) {
@@ -233,29 +251,34 @@ export const hintSlice = createSlice({
       state.settings = { ...state.settings, ...action.payload };
     },
 
-    clearHintHistory: (state) => {
+    clearHintHistory: state => {
       state.hints = state.hints.filter(h => !h.isRead);
       state.displayState.hintHistory = [];
     },
 
-    removeExpiredHints: (state) => {
+    removeExpiredHints: state => {
       const now = Date.now();
       state.hints = state.hints.filter(h => !h.expiresAt || h.expiresAt > now);
       state.displayState.unreadCount = state.hints.filter(h => !h.isRead).length;
 
       // 現在のヒントが期限切れの場合はクリア
-      if (state.displayState.currentHint &&
-          state.displayState.currentHint.expiresAt &&
-          state.displayState.currentHint.expiresAt <= now) {
+      if (
+        state.displayState.currentHint &&
+        state.displayState.currentHint.expiresAt &&
+        state.displayState.currentHint.expiresAt <= now
+      ) {
         state.displayState.currentHint = null;
       }
     },
 
-    generateMarketInsightHint: (state, action: PayloadAction<{
-      condition: MarketCondition;
-      currencyPair: string;
-      confidence: number;
-    }>) => {
+    generateMarketInsightHint: (
+      state,
+      action: PayloadAction<{
+        condition: MarketCondition;
+        currencyPair: string;
+        confidence: number;
+      }>,
+    ) => {
       const { condition, currencyPair, confidence } = action.payload;
 
       let message = '';
@@ -285,7 +308,7 @@ export const hintSlice = createSlice({
           actionText: 'チャートを確認',
           actionType: 'navigate',
           actionData: { screen: 'Chart', currencyPair },
-          expiresAt: Date.now() + (30 * 60 * 1000), // 30分後に期限切れ
+          expiresAt: Date.now() + 30 * 60 * 1000, // 30分後に期限切れ
           metadata: {
             currencyPair,
             confidence,
@@ -294,10 +317,8 @@ export const hintSlice = createSlice({
         };
 
         // 重複チェック
-        const existingHint = state.hints.find(h =>
-          h.type === hint.type &&
-          h.metadata?.currencyPair === currencyPair &&
-          !h.isRead
+        const existingHint = state.hints.find(
+          h => h.type === hint.type && h.metadata?.currencyPair === currencyPair && !h.isRead,
         );
 
         if (!existingHint) {
@@ -312,7 +333,9 @@ export const hintSlice = createSlice({
           state.hints.push(newHint);
           state.hints.sort((a, b) => {
             const priorityOrder = { critical: 4, high: 3, medium: 2, low: 1 };
-            return priorityOrder[b.priority] - priorityOrder[a.priority] || b.createdAt - a.createdAt;
+            return (
+              priorityOrder[b.priority] - priorityOrder[a.priority] || b.createdAt - a.createdAt
+            );
           });
           state.hints = state.hints.slice(0, 50);
           state.displayState.unreadCount = state.hints.filter(h => !h.isRead).length;

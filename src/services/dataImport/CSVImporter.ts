@@ -22,12 +22,23 @@ export class CSVImporter {
 
       if (existingData[0].rows.item(0).count > 0) {
         console.log(`Data for ${currencyPair} already exists, skipping import`);
-        if (onProgress) onProgress(100);
+        if (onProgress) {
+          onProgress(100);
+        }
         return;
       }
 
       // CSVファイルを読み込み（アセットから）
-      const csvContent = await RNFS.readFileAssets(`data/${currencyPair}_daily.csv`, 'utf8');
+      // iOSではMainBundlePath、AndroidではreadFileAssetsを使用
+      let csvContent: string;
+      if (RNFS.MainBundlePath) {
+        // iOS
+        const filePath = `${RNFS.MainBundlePath}/data/${currencyPair}_daily.csv`;
+        csvContent = await RNFS.readFile(filePath, 'utf8');
+      } else {
+        // Android
+        csvContent = await RNFS.readFileAssets(`data/${currencyPair}_daily.csv`, 'utf8');
+      }
       const lines = csvContent.split('\n').filter(line => line.trim());
 
       // ヘッダーをチェック
@@ -72,11 +83,15 @@ export class CSVImporter {
 
     for (const line of lines) {
       const parts = line.split(',');
-      if (parts.length < 5) continue;
+      if (parts.length < 5) {
+        continue;
+      }
 
       const [dateStr, open, high, low, close] = parts;
 
-      if (!dateStr || !open || !high || !low || !close) continue;
+      if (!dateStr || !open || !high || !low || !close) {
+        continue;
+      }
 
       // 日付形式を判定（YYYYMMDD or YYYY-MM-DD）
       let year, month, day;
@@ -120,11 +135,22 @@ export class CSVImporter {
   static async importAllCurrencyPairs(
     onProgress?: (pair: CurrencyPair, progress: number) => void,
   ): Promise<void> {
-    const pairs: CurrencyPair[] = ['USDJPY', 'EURUSD', 'EURJPY', 'GBPUSD', 'GBPJPY', 'AUDJPY', 'XAUJPY', 'XAUUSD'];
+    const pairs: CurrencyPair[] = [
+      'USDJPY',
+      'EURUSD',
+      'EURJPY',
+      'GBPUSD',
+      'GBPJPY',
+      'AUDJPY',
+      'XAUJPY',
+      'XAUUSD',
+    ];
 
     for (const pair of pairs) {
       await this.importHistoricalData(pair, progress => {
-        if (onProgress) onProgress(pair, progress);
+        if (onProgress) {
+          onProgress(pair, progress);
+        }
       });
     }
   }

@@ -1,0 +1,215 @@
+Incident Identifier: 7BA41724-9E82-428A-BDFD-5882C3A208C6
+Distributor ID:      com.apple.TestFlight
+Hardware Model:      iPhone12,1
+Process:             FXSimulator [29046]
+Path:                /private/var/containers/Bundle/Application/D6C36201-6225-4ED6-AA1B-AA846A5FE2F5/FXSimulator.app/FXSimulator
+Identifier:          com.makotobaba.fxsimulator
+Version:             1.0 (3)
+AppStoreTools:       17A323
+AppVariant:          1:iPhone12,1:18
+Beta:                YES
+Code Type:           ARM-64 (Native)
+Role:                Foreground
+Parent Process:      launchd [1]
+Coalition:           com.makotobaba.fxsimulator [7693]
+
+Date/Time:           2025-10-03 23:56:26.3727 +0900
+Launch Time:         2025-10-03 23:56:26.0865 +0900
+OS Version:          iPhone OS 18.6.2 (22G100)
+Release Type:        User
+Baseband Version:    6.03.01
+Report Version:      104
+
+Exception Type:  EXC_CRASH (SIGABRT)
+Exception Codes: 0x0000000000000000, 0x0000000000000000
+Termination Reason: SIGNAL 6 Abort trap: 6
+Terminating Process: FXSimulator [29046]
+
+Triggered by Thread:  3
+
+Last Exception Backtrace:
+0   CoreFoundation                	0x185e100c0 __exceptionPreprocess + 164 (NSException.m:249)
+1   libobjc.A.dylib               	0x1832a9abc objc_exception_throw + 88 (objc-exception.mm:356)
+2   FXSimulator                   	0x1022e3cbc RCTFatal + 568 (RCTAssert.m:147)
+3   FXSimulator                   	0x102351040 -[RCTExceptionsManager reportFatal:stack:exceptionId:extraDataAsJSON:] + 488 (RCTExceptionsManager.mm:82)
+4   FXSimulator                   	0x102351860 -[RCTExceptionsManager reportException:] + 1308 (RCTExceptionsManager.mm:154)
+5   CoreFoundation                	0x185d25934 __invoking___ + 148 (:-1)
+6   CoreFoundation                	0x185d24fac -[NSInvocation invoke] + 424 (NSForwarding.m:3411)
+7   CoreFoundation                	0x185d979cc -[NSInvocation invokeWithTarget:] + 64 (NSForwarding.m:3508)
+8   FXSimulator                   	0x1023126d4 -[RCTModuleMethod invokeWithBridge:module:arguments:] + 380 (RCTModuleMethod.mm:584)
+9   FXSimulator                   	0x10231475c facebook::react::invokeInner(RCTBridge*, RCTModuleData*, unsigned int, folly::dynamic const&, int, (anonymous namespace)::SchedulingContext) + 452 (RCTNativeModule.mm:197)
+10  FXSimulator                   	0x1023143a8 facebook::react::RCTNativeModule::invoke(unsigned int, folly::dynamic&&, int)::$_0::operator()() const + 72 (RCTNativeModule.mm:114)
+11  FXSimulator                   	0x1023143a8 invocation function for block in facebook::react::RCTNativeModule::invoke(unsigned int, folly::dynamic&&, int) + 116 (RCTNativeModule.mm:105)
+12  libdispatch.dylib             	0x18dc92aac _dispatch_call_block_and_release + 32 (init.c:1575)
+13  libdispatch.dylib             	0x18dcac584 _dispatch_client_callout + 16 (client_callout.mm:85)
+14  libdispatch.dylib             	0x18dc9b2d0 _dispatch_lane_serial_drain + 740 (queue.c:3939)
+15  libdispatch.dylib             	0x18dc9bdac _dispatch_lane_invoke + 388 (queue.c:4030)
+16  libdispatch.dylib             	0x18dca61dc _dispatch_root_queue_drain_deferred_wlh + 292 (queue.c:7198)
+17  libdispatch.dylib             	0x18dca5a60 _dispatch_workloop_worker_thread + 540 (queue.c:6792)
+18  libsystem_pthread.dylib       	0x210190a0c _pthread_wqthread + 292 (pthread.c:2696)
+19  libsystem_pthread.dylib       	0x210190aac start_wqthread + 8 (:-1)
+
+Thread 0 name:
+Thread 0:
+0   libsystem_kernel.dylib        	0x00000001d6b61ce4 mach_msg2_trap + 8 (:-1)
+1   libsystem_kernel.dylib        	0x00000001d6b6539c mach_msg2_internal + 76 (mach_msg.c:201)
+2   libsystem_kernel.dylib        	0x00000001d6b652b8 mach_msg_overwrite + 428 (mach_msg.c:0)
+3   libsystem_kernel.dylib        	0x00000001d6b65100 mach_msg + 24 (mach_msg.c:323)
+4   CoreFoundation                	0x0000000185d077a0 __CFRunLoopServiceMachPort + 160 (CFRunLoop.c:2637)
+5   CoreFoundation                	0x0000000185d06090 __CFRunLoopRun + 1208 (CFRunLoop.c:3021)
+6   CoreFoundation                	0x0000000185d07adc CFRunLoopRunSpecific + 572 (CFRunLoop.c:3434)
+7   GraphicsServices              	0x00000001d2b2d454 GSEventRunModal + 168 (GSEvent.c:2196)
+8   UIKitCore                     	0x0000000188729274 -[UIApplication _run] + 816 (UIApplication.m:3845)
+9   UIKitCore                     	0x00000001886f4a28 UIApplicationMain + 336 (UIApplication.m:5540)
+10  FXSimulator                   	0x00000001021bc050 main + 80 (main.m:8)
+11  dyld                          	0x00000001ac799f08 start + 6040 (dyldMain.cpp:1450)
+
+Thread 1:
+0   libsystem_pthread.dylib       	0x0000000210190aa4 start_wqthread + 0 (:-1)
+
+Thread 2:
+0   libsystem_pthread.dylib       	0x0000000210190aa4 start_wqthread + 0 (:-1)
+
+Thread 3 name:
+Thread 3 Crashed:
+0   libsystem_kernel.dylib        	0x00000001d6b6c1dc __pthread_kill + 8 (:-1)
+1   libsystem_pthread.dylib       	0x0000000210197c60 pthread_kill + 268 (pthread.c:1721)
+2   libsystem_c.dylib             	0x000000018dd4e0ac abort + 124 (abort.c:122)
+3   libc++abi.dylib               	0x00000002100c15a0 abort_message + 132 (abort_message.cpp:78)
+4   libc++abi.dylib               	0x00000002100aff10 demangling_terminate_handler() + 344 (cxa_default_handlers.cpp:77)
+5   libobjc.A.dylib               	0x00000001832abbf8 _objc_terminate() + 156 (objc-exception.mm:496)
+6   libc++abi.dylib               	0x00000002100c08b4 std::__terminate(void (*)()) + 16 (cxa_handlers.cpp:59)
+7   libc++abi.dylib               	0x00000002100c40d0 __cxa_rethrow + 188 (cxa_exception.cpp:658)
+8   libobjc.A.dylib               	0x00000001832a9568 objc_exception_rethrow + 44 (objc-exception.mm:399)
+9   FXSimulator                   	0x00000001023149a8 facebook::react::invokeInner(RCTBridge*, RCTModuleData*, unsigned int, folly::dynamic const&, int, (anonymous namespace)::SchedulingContext) + 1040 (RCTNativeModule.mm:233)
+10  FXSimulator                   	0x00000001023143a8 facebook::react::RCTNativeModule::invoke(unsigned int, folly::dynamic&&, int)::$_0::operator()() const + 72 (RCTNativeModule.mm:114)
+11  FXSimulator                   	0x00000001023143a8 invocation function for block in facebook::react::RCTNativeModule::invoke(unsigned int, folly::dynamic&&, int) + 116 (RCTNativeModule.mm:105)
+12  libdispatch.dylib             	0x000000018dc92aac _dispatch_call_block_and_release + 32 (init.c:1575)
+13  libdispatch.dylib             	0x000000018dcac584 _dispatch_client_callout + 16 (client_callout.mm:85)
+14  libdispatch.dylib             	0x000000018dc9b2d0 _dispatch_lane_serial_drain + 740 (queue.c:3939)
+15  libdispatch.dylib             	0x000000018dc9bdac _dispatch_lane_invoke + 388 (queue.c:4030)
+16  libdispatch.dylib             	0x000000018dca61dc _dispatch_root_queue_drain_deferred_wlh + 292 (queue.c:7198)
+17  libdispatch.dylib             	0x000000018dca5a60 _dispatch_workloop_worker_thread + 540 (queue.c:6792)
+18  libsystem_pthread.dylib       	0x0000000210190a0c _pthread_wqthread + 292 (pthread.c:2696)
+19  libsystem_pthread.dylib       	0x0000000210190aac start_wqthread + 8 (:-1)
+
+Thread 4:
+0   libsystem_pthread.dylib       	0x0000000210190aa4 start_wqthread + 0 (:-1)
+
+Thread 5:
+0   libsystem_pthread.dylib       	0x0000000210190aa4 start_wqthread + 0 (:-1)
+
+Thread 6:
+0   libsystem_pthread.dylib       	0x0000000210190aa4 start_wqthread + 0 (:-1)
+
+Thread 7:
+0   libsystem_pthread.dylib       	0x0000000210190aa4 start_wqthread + 0 (:-1)
+
+Thread 8 name:
+Thread 8:
+0   libsystem_kernel.dylib        	0x00000001d6b61ce4 mach_msg2_trap + 8 (:-1)
+1   libsystem_kernel.dylib        	0x00000001d6b6539c mach_msg2_internal + 76 (mach_msg.c:201)
+2   libsystem_kernel.dylib        	0x00000001d6b652b8 mach_msg_overwrite + 428 (mach_msg.c:0)
+3   libsystem_kernel.dylib        	0x00000001d6b65100 mach_msg + 24 (mach_msg.c:323)
+4   CoreFoundation                	0x0000000185d077a0 __CFRunLoopServiceMachPort + 160 (CFRunLoop.c:2637)
+5   CoreFoundation                	0x0000000185d06090 __CFRunLoopRun + 1208 (CFRunLoop.c:3021)
+6   CoreFoundation                	0x0000000185d07adc CFRunLoopRunSpecific + 572 (CFRunLoop.c:3434)
+7   Foundation                    	0x000000018497e79c -[NSRunLoop(NSRunLoop) runMode:beforeDate:] + 212 (NSRunLoop.m:375)
+8   Foundation                    	0x0000000184984020 -[NSRunLoop(NSRunLoop) runUntilDate:] + 64 (NSRunLoop.m:422)
+9   UIKitCore                     	0x000000018871356c -[UIEventFetcher threadMain] + 424 (UIEventFetcher.m:1351)
+10  Foundation                    	0x00000001849e4804 __NSThread__start__ + 732 (NSThread.m:991)
+11  libsystem_pthread.dylib       	0x0000000210193344 _pthread_start + 136 (pthread.c:931)
+12  libsystem_pthread.dylib       	0x0000000210190ab8 thread_start + 8 (:-1)
+
+Thread 9:
+0   libsystem_pthread.dylib       	0x0000000210190aa4 start_wqthread + 0 (:-1)
+
+Thread 10 name:
+Thread 10:
+0   libsystem_kernel.dylib        	0x00000001d6b61ce4 mach_msg2_trap + 8 (:-1)
+1   libsystem_kernel.dylib        	0x00000001d6b6539c mach_msg2_internal + 76 (mach_msg.c:201)
+2   libsystem_kernel.dylib        	0x00000001d6b652b8 mach_msg_overwrite + 428 (mach_msg.c:0)
+3   libsystem_kernel.dylib        	0x00000001d6b65100 mach_msg + 24 (mach_msg.c:323)
+4   CoreFoundation                	0x0000000185d077a0 __CFRunLoopServiceMachPort + 160 (CFRunLoop.c:2637)
+5   CoreFoundation                	0x0000000185d06090 __CFRunLoopRun + 1208 (CFRunLoop.c:3021)
+6   CoreFoundation                	0x0000000185d07adc CFRunLoopRunSpecific + 572 (CFRunLoop.c:3434)
+7   FXSimulator                   	0x00000001022f5de8 +[RCTCxxBridge runRunLoop] + 212 (RCTCxxBridge.mm:337)
+8   Foundation                    	0x00000001849e4804 __NSThread__start__ + 732 (NSThread.m:991)
+9   libsystem_pthread.dylib       	0x0000000210193344 _pthread_start + 136 (pthread.c:931)
+10  libsystem_pthread.dylib       	0x0000000210190ab8 thread_start + 8 (:-1)
+
+Thread 11 name:
+Thread 11:
+0   libsystem_kernel.dylib        	0x00000001d6b67438 __psynch_cvwait + 8 (:-1)
+1   libsystem_pthread.dylib       	0x0000000210191e50 _pthread_cond_wait + 984 (pthread_cond.c:862)
+2   JavaScriptCore                	0x000000019d2b90d8 scavenger_thread_main + 1364 (pas_scavenger.c:359)
+3   libsystem_pthread.dylib       	0x0000000210193344 _pthread_start + 136 (pthread.c:931)
+4   libsystem_pthread.dylib       	0x0000000210190ab8 thread_start + 8 (:-1)
+
+Thread 12 name:
+Thread 12:
+0   libsystem_kernel.dylib        	0x00000001d6b67438 __psynch_cvwait + 8 (:-1)
+1   libsystem_pthread.dylib       	0x0000000210191e50 _pthread_cond_wait + 984 (pthread_cond.c:862)
+2   JavaScriptCore                	0x000000019d3e9c24 WTF::ThreadCondition::timedWait(WTF::Mutex&, WTF::WallTime) + 240 (ThreadingPOSIX.cpp:680)
+3   JavaScriptCore                	0x000000019d3e9610 WTF::ParkingLot::parkConditionallyImpl(void const*, WTF::ScopedLambda<bool ()> const&, WTF::ScopedLambda<void ()> const&, WTF::TimeWithDynamicClockType const&) + 1916 (ParkingLot.cpp:606)
+4   JavaScriptCore                	0x000000019d4886b8 WTF::Detail::CallableWrapper<WTF::AutomaticThread::start(WTF::AbstractLocker const&)::$_0, void>::call() + 472 (Function.h:53)
+5   JavaScriptCore                	0x000000019d48e574 WTF::Thread::entryPoint(WTF::Thread::NewThreadContext*) + 348 (Threading.cpp:266)
+6   JavaScriptCore                	0x000000019d48eccc WTF::wtfThreadEntryPoint(void*) + 16 (ThreadingPOSIX.cpp:241)
+7   libsystem_pthread.dylib       	0x0000000210193344 _pthread_start + 136 (pthread.c:931)
+8   libsystem_pthread.dylib       	0x0000000210190ab8 thread_start + 8 (:-1)
+
+Thread 13 name:
+Thread 13:
+0   libsystem_kernel.dylib        	0x00000001d6b67438 __psynch_cvwait + 8 (:-1)
+1   libsystem_pthread.dylib       	0x0000000210191e50 _pthread_cond_wait + 984 (pthread_cond.c:862)
+2   JavaScriptCore                	0x000000019d3e9c24 WTF::ThreadCondition::timedWait(WTF::Mutex&, WTF::WallTime) + 240 (ThreadingPOSIX.cpp:680)
+3   JavaScriptCore                	0x000000019d3e9610 WTF::ParkingLot::parkConditionallyImpl(void const*, WTF::ScopedLambda<bool ()> const&, WTF::ScopedLambda<void ()> const&, WTF::TimeWithDynamicClockType const&) + 1916 (ParkingLot.cpp:606)
+4   JavaScriptCore                	0x000000019d4886b8 WTF::Detail::CallableWrapper<WTF::AutomaticThread::start(WTF::AbstractLocker const&)::$_0, void>::call() + 472 (Function.h:53)
+5   JavaScriptCore                	0x000000019d48e574 WTF::Thread::entryPoint(WTF::Thread::NewThreadContext*) + 348 (Threading.cpp:266)
+6   JavaScriptCore                	0x000000019d48eccc WTF::wtfThreadEntryPoint(void*) + 16 (ThreadingPOSIX.cpp:241)
+7   libsystem_pthread.dylib       	0x0000000210193344 _pthread_start + 136 (pthread.c:931)
+8   libsystem_pthread.dylib       	0x0000000210190ab8 thread_start + 8 (:-1)
+
+Thread 14 name:
+Thread 14:
+0   libsystem_kernel.dylib        	0x00000001d6b67438 __psynch_cvwait + 8 (:-1)
+1   libsystem_pthread.dylib       	0x0000000210191e50 _pthread_cond_wait + 984 (pthread_cond.c:862)
+2   JavaScriptCore                	0x000000019d3e9c24 WTF::ThreadCondition::timedWait(WTF::Mutex&, WTF::WallTime) + 240 (ThreadingPOSIX.cpp:680)
+3   JavaScriptCore                	0x000000019d3e9610 WTF::ParkingLot::parkConditionallyImpl(void const*, WTF::ScopedLambda<bool ()> const&, WTF::ScopedLambda<void ()> const&, WTF::TimeWithDynamicClockType const&) + 1916 (ParkingLot.cpp:606)
+4   JavaScriptCore                	0x000000019d4886b8 WTF::Detail::CallableWrapper<WTF::AutomaticThread::start(WTF::AbstractLocker const&)::$_0, void>::call() + 472 (Function.h:53)
+5   JavaScriptCore                	0x000000019d48e574 WTF::Thread::entryPoint(WTF::Thread::NewThreadContext*) + 348 (Threading.cpp:266)
+6   JavaScriptCore                	0x000000019d48eccc WTF::wtfThreadEntryPoint(void*) + 16 (ThreadingPOSIX.cpp:241)
+7   libsystem_pthread.dylib       	0x0000000210193344 _pthread_start + 136 (pthread.c:931)
+8   libsystem_pthread.dylib       	0x0000000210190ab8 thread_start + 8 (:-1)
+
+
+Thread 3 crashed with ARM Thread State (64-bit):
+    x0: 0x0000000000000000   x1: 0x0000000000000000   x2: 0x0000000000000000   x3: 0x0000000000000000
+    x4: 0x00000002100c5fdb   x5: 0x000000016ddea6d0   x6: 0x000000000000006e   x7: 0xd6023fc491b0c919
+    x8: 0x1641645e51f3ed34   x9: 0x1641645f3c2d5d34  x10: 0x0000000000000051  x11: 0x000000000000000b
+   x12: 0x000000000000000b  x13: 0x00000001861b1494  x14: 0x0000000000000001  x15: 0xffffffffb00007ff
+   x16: 0x0000000000000148  x17: 0x000000016ddeb000  x18: 0x0000000000000000  x19: 0x0000000000000006
+   x20: 0x0000000000001803  x21: 0x000000016ddeb0e0  x22: 0x434c4e47432b2b00  x23: 0x00000001038378a0
+   x24: 0x0000000000000001  x25: 0x0000000103a22040  x26: 0x0000000103af2951  x27: 0x0000000103b7e540
+   x28: 0x0000000103af2891   fp: 0x000000016ddea640   lr: 0x0000000210197c60
+    sp: 0x000000016ddea620   pc: 0x00000001d6b6c1dc cpsr: 0x40000000
+   esr: 0x56000080  Address size fault
+
+
+Binary Images:
+        0x1021b4000 -         0x10258ffff FXSimulator arm64  <716d2df390c33d4f8db0b42a6816ce72> /var/containers/Bundle/Application/D6C36201-6225-4ED6-AA1B-AA846A5FE2F5/FXSimulator.app/FXSimulator
+        0x103198000 -         0x1031a3fff libobjc-trampolines.dylib arm64e  <def9fca06da1332796903b879ffc755c> /private/preboot/Cryptexes/OS/usr/lib/libobjc-trampolines.dylib
+        0x183278000 -         0x1832c9bb3 libobjc.A.dylib arm64e  <e8825548d1483ee2807639ea9cb11129> /usr/lib/libobjc.A.dylib
+        0x18496f000 -         0x1855e305f Foundation arm64e  <c031896b2ef13d89966a0b52d54bceee> /System/Library/Frameworks/Foundation.framework/Foundation
+        0x185cf6000 -         0x186272fff CoreFoundation arm64e  <ae3c93380166397a9643356b14f6ee58> /System/Library/Frameworks/CoreFoundation.framework/CoreFoundation
+        0x1885f4000 -         0x18a53655f UIKitCore arm64e  <5e794caa41623ff6861e45f29f6b8ac0> /System/Library/PrivateFrameworks/UIKitCore.framework/UIKitCore
+        0x18dc91000 -         0x18dcd6b3f libdispatch.dylib arm64e  <b62778f758273a7ba96da24f7be95416> /usr/lib/system/libdispatch.dylib
+        0x18dcd7000 -         0x18dd566c3 libsystem_c.dylib arm64e  <335cd87d234b3fc182db943350d31a88> /usr/lib/system/libsystem_c.dylib
+        0x19d26e000 -         0x19eb8117f JavaScriptCore arm64e  <a8879ed504303775bf58e2e1efcc8ed1> /System/Library/Frameworks/JavaScriptCore.framework/JavaScriptCore
+        0x1ac75b000 -         0x1ac7f587b dyld arm64e  <cd2e758de1a23b92aae775d38f66ec54> /usr/lib/dyld
+        0x1d2b2c000 -         0x1d2b34c7f GraphicsServices arm64e  <d372e13f75053addae13062656f0b1f6> /System/Library/PrivateFrameworks/GraphicsServices.framework/GraphicsServices
+        0x1d6b61000 -         0x1d6b9aebf libsystem_kernel.dylib arm64e  <a9a7ecbd24dd37e6bb23ecbfd9a87e33> /usr/lib/system/libsystem_kernel.dylib
+        0x2100ab000 -         0x2100c8fff libc++abi.dylib arm64e  <b5a6eccef205302a8874755a0e3ad747> /usr/lib/libc++abi.dylib
+        0x210190000 -         0x21019c3f3 libsystem_pthread.dylib arm64e  <1ee1922008593cbcbdebdf37ca2e8e4f> /usr/lib/system/libsystem_pthread.dylib
+
+EOF

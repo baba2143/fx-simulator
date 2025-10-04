@@ -68,7 +68,9 @@ export const HistoryScreen: React.FC = () => {
   };
 
   const renderStats = () => {
-    if (closedTrades.length === 0) return null;
+    if (closedTrades.length === 0) {
+      return null;
+    }
 
     const totalProfit = closedTrades.reduce((sum, trade) => sum + (trade.profit || 0), 0);
     const winningTrades = closedTrades.filter(trade => (trade.profit || 0) > 0).length;

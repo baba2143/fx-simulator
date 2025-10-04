@@ -4,22 +4,13 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 
 function App(): JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
         <View style={styles.body}>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Welcome to React Native</Text>

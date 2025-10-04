@@ -39,7 +39,7 @@ const CONFIG = {
 };
 
 // ディレクトリ作成
-const ensureDirectoryExists = (dirPath) => {
+const ensureDirectoryExists = dirPath => {
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
     console.log(`📁 Created directory: ${dirPath}`);
@@ -76,16 +76,22 @@ const convertToDaily = (csvContent, currencyPair) => {
   console.log(`📊 Converting ${lines.length} minutes data to daily...`);
 
   lines.forEach(line => {
-    if (!line.trim()) return;
+    if (!line.trim()) {
+      return;
+    }
 
     // HistDataフォーマット: YYYYMMDD HHMMSS,OPEN,HIGH,LOW,CLOSE,VOL
     const parts = line.split(',');
-    if (parts.length < 5) return;
+    if (parts.length < 5) {
+      return;
+    }
 
     const [datetime, open, high, low, close, volume = '0'] = parts;
     const dateStr = datetime.split(' ')[0];
 
-    if (!dateStr || dateStr.length !== 8) return;
+    if (!dateStr || dateStr.length !== 8) {
+      return;
+    }
 
     // 日付ごとにデータを集約
     if (!dailyData[dateStr]) {
@@ -109,10 +115,14 @@ const convertToDaily = (csvContent, currencyPair) => {
 
   // 日付順にソートして出力
   const sortedDates = Object.keys(dailyData).sort();
-  const dailyCsv = sortedDates.map(date => {
-    const data = dailyData[date];
-    return `${date},${data.open.toFixed(6)},${data.high.toFixed(6)},${data.low.toFixed(6)},${data.close.toFixed(6)}`;
-  }).join('\n');
+  const dailyCsv = sortedDates
+    .map(date => {
+      const data = dailyData[date];
+      return `${date},${data.open.toFixed(6)},${data.high.toFixed(6)},${data.low.toFixed(
+        6,
+      )},${data.close.toFixed(6)}`;
+    })
+    .join('\n');
 
   console.log(`✅ Converted to ${sortedDates.length} daily records`);
 
@@ -128,7 +138,7 @@ const unzipFile = async (zipPath, outputPath) => {
   try {
     // unzipコマンドを使用（macOS/Linux）
     await execPromise(`unzip -o "${zipPath}" -d "${outputPath}"`);
-    console.log(`✅ Unzipped successfully`);
+    console.log('✅ Unzipped successfully');
     return true;
   } catch (error) {
     console.error(`❌ Failed to unzip: ${error.message}`);
@@ -176,11 +186,11 @@ const processData = async () => {
 
           // 一時CSVファイルを削除
           fs.unlinkSync(csvPath);
-          console.log(`🗑️  Cleaned up temporary CSV file`);
+          console.log('🗑️  Cleaned up temporary CSV file');
         }
       } else {
         console.log(`⚠️  ZIP file not found: ${zipPath}`);
-        console.log(`   Please download from HistData.com first`);
+        console.log('   Please download from HistData.com first');
         await downloadData(pair, year);
       }
     }
@@ -253,7 +263,7 @@ const main = async () => {
 };
 
 // エラーハンドリング
-process.on('unhandledRejection', (error) => {
+process.on('unhandledRejection', error => {
   console.error('❌ Unhandled error:', error);
   process.exit(1);
 });

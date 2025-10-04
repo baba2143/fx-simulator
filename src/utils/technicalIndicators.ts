@@ -24,7 +24,9 @@ export interface MACDValue {
  * @returns SMA値の配列
  */
 export const calculateSMA = (data: PriceData[], period: number): TechnicalIndicatorValue[] => {
-  if (data.length < period) return [];
+  if (data.length < period) {
+    return [];
+  }
 
   const smaValues: TechnicalIndicatorValue[] = [];
 
@@ -51,7 +53,9 @@ export const calculateSMA = (data: PriceData[], period: number): TechnicalIndica
  * @returns EMA値の配列
  */
 export const calculateEMA = (data: PriceData[], period: number): TechnicalIndicatorValue[] => {
-  if (data.length < period) return [];
+  if (data.length < period) {
+    return [];
+  }
 
   const emaValues: TechnicalIndicatorValue[] = [];
   const multiplier = 2 / (period + 1);
@@ -87,7 +91,9 @@ export const calculateEMA = (data: PriceData[], period: number): TechnicalIndica
  * @returns RSI値の配列
  */
 export const calculateRSI = (data: PriceData[], period: number = 14): RSIValue[] => {
-  if (data.length < period + 1) return [];
+  if (data.length < period + 1) {
+    return [];
+  }
 
   const rsiValues: RSIValue[] = [];
 
@@ -140,7 +146,9 @@ export const calculateMACD = (
   const fastEMA = calculateEMA(data, fastPeriod);
   const slowEMA = calculateEMA(data, slowPeriod);
 
-  if (fastEMA.length === 0 || slowEMA.length === 0) return [];
+  if (fastEMA.length === 0 || slowEMA.length === 0) {
+    return [];
+  }
 
   // MACDライン = 短期EMA - 長期EMA
   const macdLine: TechnicalIndicatorValue[] = [];
@@ -188,7 +196,9 @@ const calculateEMAFromValues = (
   data: TechnicalIndicatorValue[],
   period: number,
 ): TechnicalIndicatorValue[] => {
-  if (data.length < period) return [];
+  if (data.length < period) {
+    return [];
+  }
 
   const emaValues: TechnicalIndicatorValue[] = [];
   const multiplier = 2 / (period + 1);
@@ -229,7 +239,9 @@ export const calculateBollingerBands = (
   period: number = 20,
   deviation: number = 2,
 ) => {
-  if (data.length < period) return [];
+  if (data.length < period) {
+    return [];
+  }
 
   const bands = [];
 
@@ -266,8 +278,14 @@ export const calculateBollingerBands = (
  * @param dPeriod %D期間（通常3）
  * @returns ストキャスティクス値の配列
  */
-export const calculateStochastic = (data: PriceData[], kPeriod: number = 14, dPeriod: number = 3) => {
-  if (data.length < kPeriod) return [];
+export const calculateStochastic = (
+  data: PriceData[],
+  kPeriod: number = 14,
+  dPeriod: number = 3,
+) => {
+  if (data.length < kPeriod) {
+    return [];
+  }
 
   const stochValues = [];
 
@@ -277,8 +295,12 @@ export const calculateStochastic = (data: PriceData[], kPeriod: number = 14, dPe
     let lowest = data[i - kPeriod + 1].low;
 
     for (let j = i - kPeriod + 2; j <= i; j++) {
-      if (data[j].high > highest) highest = data[j].high;
-      if (data[j].low < lowest) lowest = data[j].low;
+      if (data[j].high > highest) {
+        highest = data[j].high;
+      }
+      if (data[j].low < lowest) {
+        lowest = data[j].low;
+      }
     }
 
     // %K計算

@@ -86,7 +86,7 @@ export class GoalDatabase {
           goal.description || null,
           goal.createdAt,
           goal.completedAt || null,
-        ]
+        ],
       );
 
       console.log('Goal saved successfully:', goal.id);
@@ -140,7 +140,7 @@ export class GoalDatabase {
           progress.cumulativeProfit,
           progress.tradesCount,
           progress.winRate,
-        ]
+        ],
       );
 
       console.log('Goal progress saved successfully');
@@ -197,7 +197,7 @@ export class GoalDatabase {
       const db = await DatabaseInit.getDatabase();
       const [results] = await db.executeSql(
         'SELECT * FROM goals WHERE type = ? ORDER BY created_at DESC',
-        [type]
+        [type],
       );
 
       const goals: Goal[] = [];
@@ -229,7 +229,7 @@ export class GoalDatabase {
       const db = await DatabaseInit.getDatabase();
       const [results] = await db.executeSql(
         'SELECT * FROM goals WHERE type = ? AND status = "active" ORDER BY created_at DESC LIMIT 1',
-        [type]
+        [type],
       );
 
       if (results.rows.length > 0) {
